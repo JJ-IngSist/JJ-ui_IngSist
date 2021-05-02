@@ -7,6 +7,7 @@ type Config = {
 };
 
 const request = (url: string, method: string, body: Object | null, config: Config) => {
+
     const token = localStorage['token'];
     let headers = (!config.noAuth && token) ? {
         "Content-Type": "application/json",
@@ -17,15 +18,18 @@ const request = (url: string, method: string, body: Object | null, config: Confi
         body: body ? JSON.stringify(body) : undefined,
         headers: headers,
     };
+    debugger
     return fetch(url, configuration)
+
         .then(response => {
+            debugger
             if(response.ok) return response.json();
             // if the token has expired log out the user
-            else if(response.status === 403 && localStorage['token']) {
-                localStorage.removeItem('token');
-                localStorage.removeItem('admin');
-                window.location.reload();
-            }
+            // else if(response.status === 403 && localStorage['token']) {
+            //     localStorage.removeItem('token');
+            //     localStorage.removeItem('admin');
+            //     window.location.reload();
+            // }
 
             // if an error occurs on the server return the errorMessage in case we intentionally threw that error, or a generic one in case an unexpected exception rises.
             return response.json().then(error => {
@@ -36,6 +40,7 @@ const request = (url: string, method: string, body: Object | null, config: Confi
         })
         // Catch connection errors and the error throw above.
         .catch(error => {
+            debugger
             throw(error)
         })
 }

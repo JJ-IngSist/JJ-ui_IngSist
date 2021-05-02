@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
-import logo from "../logo.svg";
 import {get, postUrl} from "../utils/http";
+import Header from "../layout/header";
 
 export type Post = {
     id: number,
@@ -19,15 +19,19 @@ const MainPage = () => {
     const loadPosts = () => {
         get(postUrl + "posts").then(
             res => {
+                console.log(res);
                 setPosts(res)
+                console.log(posts);
             }
-        ).catch()
+        ).catch( err => {
+            console.log(err);
+        })
     }
 
     return (
         <div className="App">
+            <Header/>
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
                 <p>
                     This is every Post there is!
                 </p>
