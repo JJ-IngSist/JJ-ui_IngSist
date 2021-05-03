@@ -1,12 +1,8 @@
 import React, {useEffect} from "react";
 import {get, postUrl} from "../utils/http";
-import Header from "../layout/header";
-
-export type Post = {
-    id: number,
-    text: string,
-    userId: number,
-}
+import SideDrawer from "../layout/sideDrawer";
+import Feed from "../layout/feed";
+import {Post} from "../utils/models";
 
 const MainPage = () => {
 
@@ -30,18 +26,9 @@ const MainPage = () => {
 
     return (
         <div className="App">
-            <Header/>
+            <SideDrawer/>
             <header className="App-header">
-                <p>
-                    This is every Post there is!
-                </p>
-                {posts.length > 0 ? posts.map((row, index1) => (
-                    <div key={index1} className={"post-list"}>
-                        <span>{row.text}</span>
-                    </div>
-                )) : (
-                   <span>There are no posts yet! :(</span>
-                )}
+                <Feed posts={posts}/>
             </header>
         </div>
     )

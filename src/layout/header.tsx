@@ -9,7 +9,7 @@ import {
     makeStyles,
     Menu, Theme,
     Toolbar,
-    Typography, MenuItem, createMuiTheme
+    Typography, MenuItem
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -17,11 +17,33 @@ import SearchIcon from '@material-ui/icons/Search';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import clsx from "clsx";
+import {drawerWidth} from "./sideDrawer";
+
+type Props = {
+    handleDrawerOpen: () => void,
+    openDrawer: boolean,
+    drawerWidth: number
+}
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         grow: {
             flexGrow: 1,
+        },
+        appBar: {
+            transition: theme.transitions.create(['margin', 'width'], {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+            }),
+        },
+        appBarShift: {
+            width: `calc(100% - ${drawerWidth}px)`,
+            marginLeft: drawerWidth,
+            transition: theme.transitions.create(['margin', 'width'], {
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
         },
         menuButton: {
             marginRight: theme.spacing(2),
@@ -81,12 +103,15 @@ const useStyles = makeStyles((theme: Theme) =>
                 display: 'none',
             },
         },
+        hide: {
+            display: 'none',
+        },
     }),
 );
 
 
-const Header = () => {
-    const classes = useStyles();
+const Header = (props: Props) => {
+    const classes = useStyles(props.drawerWidth);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -169,13 +194,17 @@ const Header = () => {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static">
+            <AppBar position="fixed"
+                    className={clsx(classes.appBar, {
+                        [classes.appBarShift]: props.openDrawer,
+                    })}>
                 <Toolbar>
                     <IconButton
-                        edge="start"
-                        className={classes.menuButton}
                         color="inherit"
                         aria-label="open drawer"
+                        onClick={props.handleDrawerOpen}
+                        edge="start"
+                        className={clsx(classes.menuButton, props.openDrawer && classes.hide)}
                     >
                         <MenuIcon />
                     </IconButton>
