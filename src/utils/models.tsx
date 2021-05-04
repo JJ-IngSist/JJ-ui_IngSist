@@ -1,10 +1,10 @@
 export type User = {
-    id: number,
+    id?: number,
     name: string,
     lastname?: string,
-    username?: string,
+    username: string,
     email?: string,
-    password?: string
+    password: string
 }
 
 export type Post = {

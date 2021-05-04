@@ -1,8 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
-import LoginForm from "./layout/login";
-import {post, userUrl} from "./utils/http";
-
-//state type
+import LoginForm from "../layout/login";
+import {post, userUrl} from "../utils/http";
+import {useHistory} from "react-router-dom";
 
 type State = {
     username: string
@@ -13,8 +12,8 @@ type State = {
 };
 
 type User = {
-    username?: string,
-    password?: string
+    username: string,
+    password: string
 }
 
 const initialState:State = {
@@ -28,7 +27,6 @@ const initialState:State = {
 type Action = { type: 'setUsername', payload: string }
     | { type: 'setPassword', payload: string }
     | { type: 'setIsButtonDisabled', payload: boolean }
-    | { type: 'loginSuccess', payload: string }
     | { type: 'loginFailed', payload: string }
     | { type: 'setIsError', payload: boolean };
 
@@ -48,12 +46,6 @@ const reducer = (state: State, action: Action): State => {
             return {
                 ...state,
                 isButtonDisabled: action.payload
-            };
-        case 'loginSuccess':
-            return {
-                ...state,
-                helperText: action.payload,
-                isError: false
             };
         case 'loginFailed':
             return {
@@ -86,30 +78,15 @@ const Login = () => {
         }
     }, [state.username, state.password]);
 
-    // const handleLogin = () => {
-        // if (state.username === 'abc@email.com' && state.password === 'password') {
-        //     dispatch({
-        //         type: 'loginSuccess',
-        //         payload: 'Login Successfully'
-        //     });
-        // } else {
-        //     dispatch({
-        //         type: 'loginFailed',
-        //         payload: 'Incorrect username or password'
-        //     });
-        // }
-    // };
+    let history = useHistory();
 
     const handleLogin = () => {
         const user: User = {username: state.username, password: state.password};
         post(userUrl + "login", user).then(
-            res => {
-                dispatch({
-                            type: 'loginSuccess',
-                            payload: 'Login Successfully'
-                        });
+            () => {
+                history.push('/')
             }
-        ).catch(err => {
+        ).catch(() => {
             dispatch({
                         type: 'loginFailed',
                         payload: 'Incorrect username or password'
@@ -137,7 +114,8 @@ const Login = () => {
                 type: 'setPassword',
                 payload: event.target.value
             });
-        }
+        };
+
     return (
         <LoginForm handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleKeyPress={handleKeyPress} handleLogin={handleLogin} state={state}/>
     );
