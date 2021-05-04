@@ -33,9 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
         container: {
             display: 'flex',
             flexWrap: 'wrap',
-            width: 400,
-            margin: `${theme.spacing(0)} auto`,
-            backgroundColor: theme.palette.background.default
+            backgroundColor: '#282c34',
+            justifyContent: 'center',
+            alignContent: 'center',
+            height: '100vh',
         },
         loginBtn: {
             marginTop: theme.spacing(2),
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: theme.palette.primary.main
         },
         card: {
-            marginTop: theme.spacing(10),
+            borderRadius: '8px',
             backgroundColor: theme.palette.secondary.light
         },
         text: {

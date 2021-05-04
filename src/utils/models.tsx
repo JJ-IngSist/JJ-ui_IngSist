@@ -8,10 +8,10 @@ export type User = {
 }
 
 export type Post = {
-    id: number,
-    date: Date,
+    id?: number,
+    date?: Date,
     name?: string,
-    likes: number,
+    likes?: number,
     text: string,
     userId?: number,
     lastname?: string,

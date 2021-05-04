@@ -15,8 +15,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ChatIcon from '@material-ui/icons/Chat';
 import Header from "./header";
+import clsx from "clsx";
 
 export const drawerWidth = 240;
+
+type Props = {
+    child: JSX.Element,
+}
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -52,6 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 duration: theme.transitions.duration.leavingScreen,
             }),
             marginLeft: -drawerWidth,
+            marginRight: -drawerWidth,
         },
         contentShift: {
             transition: theme.transitions.create('margin', {
@@ -70,7 +76,7 @@ const drawerOptions = [
     {name: 'Messages', icon: <ChatIcon/>}
 ]
 
-export default function SideDrawer() {
+export default function Layout(props: Props) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -84,8 +90,7 @@ export default function SideDrawer() {
     };
 
     return (
-        <div className={classes.root}>
-            <CssBaseline />
+        <div>
             <Header handleDrawerOpen={handleDrawerOpen} openDrawer={open} drawerWidth={drawerWidth}/>
             <Drawer
                 className={classes.drawer}
@@ -111,6 +116,13 @@ export default function SideDrawer() {
                     ))}
                 </List>
             </Drawer>
+            <main className={clsx(classes.content, {
+                [classes.contentShift]: open,
+            })}>
+                <header className={"App-header"}>
+                    {props.child}
+                </header>
+            </main>
         </div>
     );
 }

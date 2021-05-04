@@ -1,16 +1,12 @@
-import React, {useEffect} from "react";
-import {get, postUrl} from "../utils/http";
-import SideDrawer from "../layout/sideDrawer";
-import Feed from "../layout/feed";
-import {Post} from "../utils/models";
+import React, {useEffect} from 'react';
+import {get, postUrl} from '../utils/http';
+import Layout from '../layout/Layout';
+import Feed from '../layout/feed';
+import {Post} from '../utils/models';
 
 const MainPage = () => {
 
     const [posts, setPosts] = React.useState<Post[]>([]);
-
-    useEffect(() => {
-        loadPosts()
-    }, [])
 
     const loadPosts = () => {
         get(postUrl + "posts").then(
@@ -24,12 +20,13 @@ const MainPage = () => {
         })
     }
 
+    useEffect(() => {
+        loadPosts()
+    }, [])
+
     return (
         <div className="App">
-            <SideDrawer/>
-            <header className="App-header">
-                <Feed posts={posts}/>
-            </header>
+            <Layout child={<Feed posts={posts} setPosts={setPosts}/>}/>
         </div>
     )
 }

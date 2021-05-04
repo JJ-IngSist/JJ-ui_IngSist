@@ -18,11 +18,9 @@ const request = (url: string, method: string, body: Object | null, config: Confi
         body: body ? JSON.stringify(body) : undefined,
         headers: headers,
     };
-    debugger
     return fetch(url, configuration)
 
         .then(response => {
-            debugger
             if(response.ok) return response.json();
             // if the token has expired log out the user
             // else if(response.status === 403 && localStorage['token']) {
