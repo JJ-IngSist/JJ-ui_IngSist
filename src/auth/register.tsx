@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {RegisterState} from "../register/Register";
 
 function Copyright() {
     return (
@@ -24,14 +25,6 @@ function Copyright() {
     );
 }
 
-type State = {
-    username: string
-    password:  string
-    isButtonDisabled: boolean
-    helperText: string
-    isError: boolean
-};
-
 type Props = {
     handleNameChange: ChangeEventHandler<HTMLInputElement>,
     handleLastnameChange: ChangeEventHandler<HTMLInputElement>,
@@ -40,7 +33,7 @@ type Props = {
     handlePasswordChange: ChangeEventHandler<HTMLInputElement>,
     handleKeyPress: (event: React.KeyboardEvent) => void,
     handleRegister : () => void,
-    state: State,
+    state: RegisterState,
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(3),
     },
     submit: {
@@ -80,7 +73,7 @@ export default function RegisterForm(props: Props) {
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                error={props.state.isError}
+                                error={props.state.name.error}
                                 fullWidth
                                 id="name"
                                 type="name"
@@ -93,7 +86,7 @@ export default function RegisterForm(props: Props) {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                error={props.state.isError}
+                                error={props.state.lastname.error}
                                 fullWidth
                                 id="lastname"
                                 type="lastname"
@@ -106,7 +99,7 @@ export default function RegisterForm(props: Props) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                error={props.state.isError}
+                                error={props.state.email.error}
                                 fullWidth
                                 id="email"
                                 type="email"
@@ -119,7 +112,7 @@ export default function RegisterForm(props: Props) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                error={props.state.isError}
+                                error={props.state.username.error}
                                 fullWidth
                                 id="username"
                                 type="username"
@@ -132,7 +125,7 @@ export default function RegisterForm(props: Props) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                error={props.state.isError}
+                                error={props.state.password.error}
                                 fullWidth
                                 id="password"
                                 type="password"

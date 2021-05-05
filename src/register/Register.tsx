@@ -2,40 +2,40 @@ import React, {useEffect, useReducer} from "react";
 import {post, userUrl} from "../utils/http";
 import {User} from "../utils/models";
 import { useHistory } from "react-router-dom";
-import RegisterForm from "../layout/register";
+import RegisterForm from "../auth/register";
 
-type State = {
-    name: string
-    lastname:  string
-    username: string
-    email:  string
-    password:  string
+export type RegisterState = {
+    name: { value:string, error:boolean }
+    lastname:  { value:string, error:boolean }
+    username: { value:string, error:boolean }
+    email:  { value:string, error:boolean }
+    password:  { value:string, error:boolean }
     isButtonDisabled: boolean
     helperText: string
     isError: boolean
 };
 
-const initialState:State = {
-    name: '',
-    lastname: '',
-    username: '',
-    email: '',
-    password: '',
+const initialState:RegisterState = {
+    name: {value: '', error: false},
+    lastname: {value: '', error: false},
+    username: {value: '', error: false},
+    email: {value: '', error: false},
+    password: {value: '', error: false},
     isButtonDisabled: true,
     helperText: '',
     isError: false
 };
 
-type Action = { type: 'setName', payload: string }
-    | { type: 'setLastname', payload: string }
-    | { type: 'setEmail', payload: string }
-    | { type: 'setUsername', payload: string }
-    | { type: 'setPassword', payload: string }
+type Action = { type: 'setName', payload: { value:string, error:boolean } }
+    | { type: 'setLastname', payload: { value:string, error:boolean } }
+    | { type: 'setEmail', payload: { value:string, error:boolean } }
+    | { type: 'setUsername', payload: { value:string, error:boolean } }
+    | { type: 'setPassword', payload: { value:string, error:boolean } }
     | { type: 'setIsButtonDisabled', payload: boolean }
     | { type: 'registerFailed', payload: string }
     | { type: 'setIsError', payload: boolean };
 
-const reducer = (state: State, action: Action): State => {
+const reducer = (state: RegisterState, action: Action): RegisterState => {
     switch (action.type) {
         case 'setName':
             return {
@@ -102,12 +102,17 @@ const Register = () => {
     let history = useHistory();
 
     const handleRegister = () => {
-        const user: User = {name: state.name, lastname: state.lastname, email: state.email, username: state.username, password: state.password};
+        const user: User = {name: state.name.value,
+            lastname: state.lastname.value,
+            email: state.email.value,
+            username: state.username.value,
+            password: state.password.value};
         post(userUrl + "register", user).then(
             () => {
                 history.push('/')
             }
         ).catch(() => {
+            //falta dependiendo los errores del back que falle cada field en especifico.
             dispatch({
                 type: 'registerFailed',
                 payload: 'Incorrect registration'
@@ -125,7 +130,7 @@ const Register = () => {
         (event) => {
             dispatch({
                 type: 'setName',
-                payload: event.target.value
+                payload: { value: event.target.value, error: event.target.value === ''}
             });
         };
 
@@ -133,7 +138,7 @@ const Register = () => {
         (event) => {
             dispatch({
                 type: 'setLastname',
-                payload: event.target.value
+                payload: { value: event.target.value, error: event.target.value === ''}
             });
         };
 
@@ -141,28 +146,37 @@ const Register = () => {
         (event) => {
             dispatch({
                 type: 'setUsername',
-                payload: event.target.value
+                payload: { value: event.target.value, error: event.target.value === ''}
             });
         };
 
     const handleEmailChange: React.ChangeEventHandler<HTMLInputElement> =
         (event) => {
+        const regex = /\S+@\S+\.\S+/;
             dispatch({
                 type: 'setEmail',
-                payload: event.target.value
+                payload: { value: event.target.value, error: !regex.test(event.target.value)}
             });
         };
 
     const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> =
         (event) => {
+        const regex = /(?=.{8,})/;
             dispatch({
                 type: 'setPassword',
-                payload: event.target.value
+                payload: { value: event.target.value, error: !regex.test(event.target.value)}
             });
         };
 
     return (
-        <RegisterForm handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleNameChange={handleNameChange} handleLastnameChange={handleLastnameChange} handleEmailChange={handleEmailChange} handleKeyPress={handleKeyPress} handleRegister={handleRegister} state={state}/>
+        <RegisterForm handleUsernameChange={handleUsernameChange}
+                      handlePasswordChange={handlePasswordChange}
+                      handleNameChange={handleNameChange}
+                      handleLastnameChange={handleLastnameChange}
+                      handleEmailChange={handleEmailChange}
+                      handleKeyPress={handleKeyPress}
+                      handleRegister={handleRegister}
+                      state={state}/>
     );
 };
 

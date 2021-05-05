@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
-import LoginForm from "../layout/login";
+import LoginForm from "../auth/login";
 import {post, userUrl} from "../utils/http";
 import {useHistory} from "react-router-dom";
 
