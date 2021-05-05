@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
+import {Grid, Link} from "@material-ui/core";
 
 type State = {
     username: string
@@ -52,10 +53,14 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         card: {
             borderRadius: '8px',
-            backgroundColor: theme.palette.secondary.light
+            backgroundColor: theme.palette.secondary.light,
+            paddingBottom: '8px'
         },
         text: {
             color: theme.palette.background.default
+        },
+        link: {
+            paddingLeft: '8px'
         }
     })
 );
@@ -141,6 +146,9 @@ export default function RegisterForm(props: Props) {
                         Register
                     </Button>
                 </CardActions>
+                <Link href="/login" variant="body2" className={classes.link}>
+                    Already have an account? Sign in
+                </Link>
             </Card>
         </form>
     );

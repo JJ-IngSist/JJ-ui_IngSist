@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import React, {ChangeEventHandler} from "react";
+import {Grid, Link} from "@material-ui/core";
 
 type State = {
     username: string
@@ -50,10 +51,14 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         card: {
             borderRadius: '8px',
-            backgroundColor: theme.palette.secondary.light
+            backgroundColor: theme.palette.secondary.light,
+            paddingBottom: '8px'
         },
         text: {
             color: theme.palette.background.default
+        },
+        link: {
+            paddingLeft: '8px'
         }
     })
 );
@@ -108,6 +113,9 @@ export default function LoginForm(props: Props) {
                         Login
                     </Button>
                 </CardActions>
+                <Link href="/register" variant="body2" className={classes.link}>
+                    Don't have an account yet? Register
+                </Link>
             </Card>
         </form>
     );
