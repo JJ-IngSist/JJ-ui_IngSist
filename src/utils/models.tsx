@@ -12,6 +12,7 @@ export type Post = {
     date?: Date,
     name?: string,
     likes?: number,
+    liked?: boolean,
     text: string,
     userId?: number,
     lastname?: string,
