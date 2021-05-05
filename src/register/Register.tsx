@@ -1,8 +1,8 @@
 import React, {useEffect, useReducer} from "react";
 import {post, userUrl} from "../utils/http";
 import {User} from "../utils/models";
-import RegisterForm from "../layout/register";
 import { useHistory } from "react-router-dom";
+import RegisterForm from "../layout/register";
 
 type State = {
     name: string
@@ -110,7 +110,7 @@ const Register = () => {
         ).catch(() => {
             dispatch({
                 type: 'registerFailed',
-                payload: 'Invalid Registration'
+                payload: 'Incorrect registration'
             });
         })
     }
