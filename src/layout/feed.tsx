@@ -50,7 +50,7 @@ const Feed = (props: Props) => {
             <InputPost addPost={addPost}/>
             <List className={classes.root}>
                 {props.posts.map((row, index) => (
-                    <PostView post={row}/>
+                    <PostView key={index} post={row}/>
                 ))}
             </List>
         </div>

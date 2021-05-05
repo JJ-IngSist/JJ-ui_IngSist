@@ -66,6 +66,7 @@ const InputPost = (props: Props) => {
                             <div className={classes.button}>
                                 <Button onClick={handleClick}
                                         color={'primary'}
+                                        className={'send'}
                                         endIcon={<Icon>send</Icon>}
                                         disabled={value.text === '' || value.text.length > charLimit}>
                                     Send

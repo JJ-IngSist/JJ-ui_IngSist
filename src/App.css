@@ -56,6 +56,6 @@ body {
   }
 }
 
-Button:disabled {
+.send:disabled{
   background-color: #282c34;
 }

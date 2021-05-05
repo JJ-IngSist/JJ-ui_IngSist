@@ -9,7 +9,7 @@ const MainPage = () => {
     const [posts, setPosts] = React.useState<Post[]>([]);
 
     const loadPosts = () => {
-        get(postUrl + "posts").then(
+        get(postUrl + "posts/most-liked").then(
             res => {
                 console.log(res);
                 setPosts(res)

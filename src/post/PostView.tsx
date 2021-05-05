@@ -8,14 +8,14 @@ import Typography from "@material-ui/core/Typography";
 import {Checkbox, FormControlLabel} from "@material-ui/core";
 import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import Divider from "@material-ui/core/Divider";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 import {post, userUrl} from "../utils/http";
 
 type Props = {
     post: Post
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         flex: {
             display: 'flex',

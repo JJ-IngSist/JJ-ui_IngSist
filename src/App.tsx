@@ -27,7 +27,6 @@ const theme = createMuiTheme({
       secondary: '#7f7f7f',
     },
     action: {
-      disabledBackground: '#282c34',
       disabled: '#7f7f7f',
     }
   },
