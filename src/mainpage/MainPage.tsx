@@ -7,13 +7,13 @@ import {Post} from '../utils/models';
 const MainPage = () => {
 
     const [posts, setPosts] = React.useState<Post[]>([]);
+    const [firsts, setFirsts] = React.useState<Post[]>([]);
 
     const loadPosts = () => {
         get(postUrl + "posts/most-liked").then(
             res => {
-                console.log(res);
-                setPosts(res)
-                console.log(posts);
+                setPosts(res.map((p: { madeByFollowed: any; }) => p.madeByFollowed))
+                setFirsts(res.map((p: { firstOfThread: any; }) => p.firstOfThread))
             }
         ).catch( err => {
             console.log(err);
@@ -26,7 +26,7 @@ const MainPage = () => {
 
     return (
         <div className="App">
-            <Layout child={<Feed posts={posts} setPosts={setPosts}/>}/>
+            <Layout child={<Feed posts={posts} setPosts={setPosts} firsts={firsts}/>}/>
         </div>
     )
 }

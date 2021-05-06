@@ -5,17 +5,20 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
-import {Checkbox, FormControlLabel} from "@material-ui/core";
+import {Checkbox, FormControlLabel, IconButton, Link} from "@material-ui/core";
 import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import Divider from "@material-ui/core/Divider";
-import {createStyles, makeStyles} from "@material-ui/core/styles";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {post, userUrl} from "../utils/http";
+import Button from "@material-ui/core/Button";
+import CommentIcon from '@material-ui/icons/Comment';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 type Props = {
     post: Post
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         flex: {
             display: 'flex',
@@ -25,6 +28,17 @@ const useStyles = makeStyles(() =>
             wordWrap: "break-word",
             display: 'inline',
             width: '90%',
+        },
+        comment: {
+            color: '#7f7f7f',
+            marginTop: '5px'
+        },
+        form: {
+            marginRight: '0px'
+        },
+        thread: {
+            textAlign: 'right',
+            paddingRight: '10px'
         }
     }),
 );
@@ -83,7 +97,10 @@ const PostView = (props: Props) => {
                             >
                                 {thePost.text}
                             </Typography>
-                            <FormControlLabel
+                            <IconButton aria-label="comment" className={classes.comment}>
+                                <ChatBubbleOutlineIcon />
+                            </IconButton>
+                            <FormControlLabel className={classes.form}
                                 control={
                                     <Checkbox icon={<FavoriteBorder />}
                                               checkedIcon={<Favorite />}
@@ -95,6 +112,15 @@ const PostView = (props: Props) => {
                     }
                 />
             </ListItem>
+
+            <Link
+                className={classes.thread}
+                component="button"
+                variant="body2"
+                onClick={() => {console.info("I'm a button.");}}
+            >
+                View Thread ({thePost.likes})
+            </Link>
             <Divider variant="inset" component="li" />
         </div>
     )

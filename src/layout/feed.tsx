@@ -8,6 +8,7 @@ import PostView from "../post/PostView";
 
 type Props = {
     posts: Post[]
+    firsts: Post[]
     setPosts: (posts: Post[]) => void
 }
 
