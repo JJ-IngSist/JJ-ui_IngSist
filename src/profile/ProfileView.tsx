@@ -6,7 +6,7 @@ const ProfileView = () => {
 
     return (
         <div className="App">
-            <Layout child={<ProfileContent/>}/>
+            <Layout child={<ProfileContent id={1}/>}/>
         </div>
     )
 }
