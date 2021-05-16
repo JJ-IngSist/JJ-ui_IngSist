@@ -19,6 +19,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import clsx from "clsx";
 import {drawerWidth} from "./Layout";
+import {useHistory} from "react-router-dom";
 
 type Props = {
     handleDrawerOpen: () => void,
@@ -112,15 +113,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Header = (props: Props) => {
     const classes = useStyles(props.drawerWidth);
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
+    const handleProfileMenuOpen = () => {
+        let path = `/profile`;
+        history.push(path);
+    }
 
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);

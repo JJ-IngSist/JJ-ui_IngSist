@@ -4,7 +4,7 @@ export type User = {
     lastname?: string,
     username: string,
     email?: string,
-    password: string
+    password?: string
 }
 
 export type Post = {
