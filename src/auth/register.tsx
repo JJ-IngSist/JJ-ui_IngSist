@@ -27,7 +27,6 @@ function Copyright() {
 
 type Props = {
     handleNameChange: ChangeEventHandler<HTMLInputElement>,
-    handleLastnameChange: ChangeEventHandler<HTMLInputElement>,
     handleEmailChange: ChangeEventHandler<HTMLInputElement>,
     handleUsernameChange: ChangeEventHandler<HTMLInputElement>,
     handlePasswordChange: ChangeEventHandler<HTMLInputElement>,
@@ -71,7 +70,7 @@ export default function RegisterForm(props: Props) {
                 </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12}>
                             <TextField
                                 error={props.state.name.error}
                                 fullWidth
@@ -81,19 +80,6 @@ export default function RegisterForm(props: Props) {
                                 placeholder="Name"
                                 margin="normal"
                                 onChange={props.handleNameChange}
-                                onKeyPress={props.handleKeyPress}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                error={props.state.lastname.error}
-                                fullWidth
-                                id="lastname"
-                                type="lastname"
-                                label="Lastname"
-                                placeholder="Lastname"
-                                margin="normal"
-                                onChange={props.handleLastnameChange}
                                 onKeyPress={props.handleKeyPress}
                             />
                         </Grid>

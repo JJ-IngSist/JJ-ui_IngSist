@@ -2,6 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import LoginForm from "../auth/login";
 import {post, userUrl} from "../utils/http";
 import {useHistory} from "react-router-dom";
+import {ACCESS_TOKEN} from "../Constants";
 
 type State = {
     username: string
@@ -83,7 +84,8 @@ const Login = () => {
     const handleLogin = () => {
         const user: User = {username: state.username, password: state.password};
         post(userUrl + "login", user).then(
-            () => {
+            (response) => {
+                localStorage.setItem(ACCESS_TOKEN, response.accessToken);
                 history.push('/')
             }
         ).catch(() => {

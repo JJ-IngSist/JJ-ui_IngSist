@@ -27,7 +27,6 @@ const initialState:RegisterState = {
 };
 
 type Action = { type: 'setName', payload: { value:string, error:boolean } }
-    | { type: 'setLastname', payload: { value:string, error:boolean } }
     | { type: 'setEmail', payload: { value:string, error:boolean } }
     | { type: 'setUsername', payload: { value:string, error:boolean } }
     | { type: 'setPassword', payload: { value:string, error:boolean } }
@@ -41,11 +40,6 @@ const reducer = (state: RegisterState, action: Action): RegisterState => {
             return {
                 ...state,
                 name: action.payload
-            };
-        case 'setLastname':
-            return {
-                ...state,
-                lastname: action.payload
             };
         case 'setEmail':
             return {
@@ -103,7 +97,6 @@ const Register = () => {
 
     const handleRegister = () => {
         const user: User = {name: state.name.value,
-            lastname: state.lastname.value,
             email: state.email.value,
             username: state.username.value,
             password: state.password.value};
@@ -130,14 +123,6 @@ const Register = () => {
         (event) => {
             dispatch({
                 type: 'setName',
-                payload: { value: event.target.value, error: event.target.value === ''}
-            });
-        };
-
-    const handleLastnameChange: React.ChangeEventHandler<HTMLInputElement> =
-        (event) => {
-            dispatch({
-                type: 'setLastname',
                 payload: { value: event.target.value, error: event.target.value === ''}
             });
         };
@@ -172,7 +157,6 @@ const Register = () => {
         <RegisterForm handleUsernameChange={handleUsernameChange}
                       handlePasswordChange={handlePasswordChange}
                       handleNameChange={handleNameChange}
-                      handleLastnameChange={handleLastnameChange}
                       handleEmailChange={handleEmailChange}
                       handleKeyPress={handleKeyPress}
                       handleRegister={handleRegister}
