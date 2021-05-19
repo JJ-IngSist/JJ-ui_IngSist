@@ -33,6 +33,7 @@ type Props = {
     handleKeyPress: (event: React.KeyboardEvent) => void,
     handleRegister : () => void,
     state: RegisterState,
+    purpose: string
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -132,7 +133,7 @@ export default function RegisterForm(props: Props) {
                         onClick={props.handleRegister}
                         disabled={props.state.isButtonDisabled}
                     >
-                        Sign Up
+                        {props.purpose}
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>

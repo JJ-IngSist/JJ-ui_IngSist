@@ -160,7 +160,8 @@ const Register = () => {
                       handleEmailChange={handleEmailChange}
                       handleKeyPress={handleKeyPress}
                       handleRegister={handleRegister}
-                      state={state}/>
+                      state={state}
+                      purpose={'Sign Up'}/>
     );
 };
 
