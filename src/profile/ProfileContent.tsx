@@ -4,6 +4,9 @@ import {Button} from "@material-ui/core";
 import './ProfileContent.css'
 import {get, postUrl, userUrl} from "../utils/http";
 import Feed from "../layout/feed";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from '@material-ui/icons/Edit';
+import EditProfileModal from "./EditProfileModal";
 
 type Props = {
     id: number
@@ -11,8 +14,9 @@ type Props = {
 
 const ProfileContent = (props: Props) => {
 
-    const [user, setUser] = useState<User>({name:'', username:'', email:''});
+    const [user, setUser] = useState<User>({id: 0, name:'', username:'', email:'', password: ''});
     const [posts, setPosts] = useState<Post[]>([]);
+    const [openModal, setOpenModal] = useState<boolean>(false);
 
     useEffect(() => {
         get(userUrl + 'user/' + props.id)
@@ -26,11 +30,23 @@ const ProfileContent = (props: Props) => {
             .catch()
     }, [])
 
+    const handleOpenModal = () => {
+        setOpenModal(true);
+    }
+
     return (
         <div className="content">
             <div className={'banner'}>
-                <p className={'mail-style'}>{user.email}</p>
+                <div className={'flex-container'}>
+                    <p className={'mail-style'}>{user.email  + '\t'}</p>
+                    <p className={'mail-style'}> - </p>
+                    <p className={'mail-style'}>{'\t' + user.username}</p>
+                </div>
+
                 <p className={'name-style'}>{user.name}</p>
+                <IconButton onClick={handleOpenModal}><EditIcon/></IconButton>
+                <EditProfileModal open={openModal} setOpen={setOpenModal} userInfo={user} setUserInfo={setUser}/>
+
             </div>
             <div className={'flex-container'}>
                 <div className={'side-container'}>
