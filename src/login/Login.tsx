@@ -83,12 +83,14 @@ const Login = () => {
 
     const handleLogin = () => {
         const user: User = {username: state.username, password: state.password};
+        debugger
         post(userUrl + "login", user).then(
             (response) => {
-                localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+                document.cookie=`${response.username}=${response.token.token};`
                 history.push('/')
             }
-        ).catch(() => {
+        ).catch(error => {
+            console.log(error)
             dispatch({
                         type: 'loginFailed',
                         payload: 'Incorrect username or password'
