@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Modal} from "@material-ui/core";
+import ReactModal from "react-modal";
 import {User} from "../utils/models";
 import {put, userUrl} from "../utils/http";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,7 +17,7 @@ type Props = {
     open: boolean,
     setOpen: (boolean) => void,
     userInfo: User,
-    setUserInfo: (User) => void
+    setUserInfo: (User) => void,
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +51,6 @@ const EditProfileModal = (props: Props) => {
         name: props.userInfo.name, username: props.userInfo.username, email: props.userInfo.email, password: ''});
 
     const handleClose = () => {
-        debugger
         put(userUrl + 'user/' + user.id, user)
             .then(res => {
                 props.setUserInfo(res)
@@ -156,18 +156,6 @@ const EditProfileModal = (props: Props) => {
                     </form>
                 </div>
             </Container>
-
-
-
-            {/*<RegisterForm */}
-            {/*    handleNameChange={(event) => setUser({...user, name: event.target.value})} */}
-            {/*    handleEmailChange={(event) => setUser({...user, email: event.target.value})} */}
-            {/*    handleUsernameChange={(event) => setUser({...user, username: event.target.value})} */}
-            {/*    handlePasswordChange={(event) => setUser({...user, password: event.target.value})} */}
-            {/*    handleKeyPress={} */}
-            {/*    handleRegister={} */}
-            {/*    state={user} */}
-            {/*    purpose={'update'}/>*/}
         </Modal>
     )
 

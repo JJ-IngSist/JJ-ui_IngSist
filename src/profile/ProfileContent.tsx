@@ -45,8 +45,9 @@ const ProfileContent = (props: Props) => {
 
                 <p className={'name-style'}>{user.name}</p>
                 <IconButton onClick={handleOpenModal}><EditIcon/></IconButton>
-                <EditProfileModal open={openModal} setOpen={setOpenModal} userInfo={user} setUserInfo={setUser}/>
-
+                {user.id !== 0? <EditProfileModal open={openModal} setOpen={setOpenModal} userInfo={user} setUserInfo={setUser}/>
+                    : <></>
+                }
             </div>
             <div className={'flex-container'}>
                 <div className={'side-container'}>
