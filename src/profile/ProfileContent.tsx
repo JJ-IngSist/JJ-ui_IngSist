@@ -12,20 +12,22 @@ type Props = {
     id: number
 }
 
-const ProfileContent = (props: Props) => {
+const ProfileContent = () => {
 
     const [user, setUser] = useState<User>({id: 0, name:'', username:'', email:'', password: ''});
     const [posts, setPosts] = useState<Post[]>([]);
     const [openModal, setOpenModal] = useState<boolean>(false);
 
     useEffect(() => {
-        get(userUrl + 'user/' + props.id)
-            .then(res => setUser(res))
-            .catch()
-        get(postUrl + 'user/' + props.id + '/posts')
+        get(userUrl + 'user/logged')
             .then(res => {
-                setPosts(res)
-                console.log(res);
+                setUser(res)
+                get(postUrl + 'user/' + user.id + '/posts')
+                    .then(res => {
+                        setPosts(res)
+                        console.log(res);
+                    })
+                    .catch()
             })
             .catch()
     }, [])
@@ -58,7 +60,7 @@ const ProfileContent = (props: Props) => {
                     </div>
                     <div className={'profile-info'}>
                         <h3 className={'subtitle'}>About</h3>
-                        <p className={'about-details'}>Me llamo rocio y soy alta capa los mejores posts del mundo estan aca. Seguime para ver el mejor contenido.</p>
+                        <p className={'about-details'}>{user.description}</p>
                         <div className={'info-table'}>
                             <p>Followers</p>
                             <p>100</p>

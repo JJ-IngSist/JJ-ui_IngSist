@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Modal} from "@material-ui/core";
-import ReactModal from "react-modal";
-import {User} from "../utils/models";
-import {put, userUrl} from "../utils/http";
+import {ChangePassword, User} from "../utils/models";
+import {post, put, userUrl} from "../utils/http";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
@@ -42,13 +41,18 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    danger_zone: {
+        backgroundColor: 'indianred',
+        marginBottom: '16px',
+        marginTop: '25px'
+    }
 }));
 
 const EditProfileModal = (props: Props) => {
 
     const classes = useStyles();
     const [user, setUser] = useState<User>({id: props.userInfo.id,
-        name: props.userInfo.name, username: props.userInfo.username, email: props.userInfo.email, password: ''});
+        name: props.userInfo.name, username: props.userInfo.username, email: props.userInfo.email, password: '', description: ''});
 
     const handleClose = () => {
         put(userUrl + 'user/' + user.id, user)
@@ -61,24 +65,23 @@ const EditProfileModal = (props: Props) => {
     }
 
     const handleNameChange = (event) => {
-        debugger
-        if(user.id === 0) setUser({...props.userInfo, name: event.target.value})
-        else setUser({...user, name: event.target.value})
+        setUser({...user, name: event.target.value})
     }
 
     const handleEmailChange = (event) => {
-        if(user.id === 0) setUser({...props.userInfo, email: event.target.value})
-        else setUser({...user, email: event.target.value})
+        setUser({...user, email: event.target.value})
     }
 
     const handleUsernameChange = (event) => {
-        if(user.id === 0) setUser({...props.userInfo, username: event.target.value})
-        else setUser({...user, username: event.target.value})
+        setUser({...user, username: event.target.value})
+    }
+
+    const handleDescriptionChange = (event) => {
+        setUser({...user, description: event.target.value})
     }
 
     return (
         <Modal open={props.open} onClose={handleClose}>
-
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
@@ -92,7 +95,6 @@ const EditProfileModal = (props: Props) => {
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
-                                    // error={props.state.name.error}
                                     fullWidth
                                     id="name"
                                     type="name"
@@ -101,12 +103,10 @@ const EditProfileModal = (props: Props) => {
                                     margin="normal"
                                     defaultValue={user.name}
                                     onChange={handleNameChange}
-                                    // onKeyPress={props.handleKeyPress}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    // error={props.state.email.error}
                                     fullWidth
                                     id="email"
                                     type="email"
@@ -115,12 +115,10 @@ const EditProfileModal = (props: Props) => {
                                     margin="normal"
                                     defaultValue={user.email}
                                     onChange={handleEmailChange}
-                                    // onKeyPress={props.handleKeyPress}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    // error={props.state.username.error}
                                     fullWidth
                                     id="username"
                                     type="username"
@@ -129,10 +127,30 @@ const EditProfileModal = (props: Props) => {
                                     margin="normal"
                                     defaultValue={user.username}
                                     onChange={handleUsernameChange}
-                                    // onKeyPress={props.handleKeyPress}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    id="description"
+                                    type="name"
+                                    label="Description"
+                                    placeholder="Description"
+                                    margin="normal"
+                                    defaultValue={user.description}
+                                    onChange={handleDescriptionChange}
                                 />
                             </Grid>
                         </Grid>
+                        <Button
+                            fullWidth
+                            color="primary"
+                            className={classes.danger_zone}
+                            variant="contained"
+                            href={"/changePassword"}
+                        >
+                            Change password
+                        </Button>
                         <Button
                             fullWidth
                             variant="contained"

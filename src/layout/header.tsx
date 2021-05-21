@@ -20,6 +20,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import clsx from "clsx";
 import {drawerWidth} from "./Layout";
 import {useHistory} from "react-router-dom";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 type Props = {
     handleDrawerOpen: () => void,
@@ -125,6 +126,11 @@ const Header = (props: Props) => {
         history.push(path);
     }
 
+    const handleLogout = () => {
+        document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+        history.push('/login');
+    }
+
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
@@ -165,22 +171,6 @@ const Header = (props: Props) => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                     aria-label="account of current user"
@@ -191,6 +181,17 @@ const Header = (props: Props) => {
                     <AccountCircle />
                 </IconButton>
                 <p>Profile</p>
+            </MenuItem>
+            <MenuItem href={'/logout'}>
+                <IconButton
+                    aria-label="Logout button"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                    <ExitToAppIcon />
+                </IconButton>
+                <p>Logout</p>
             </MenuItem>
         </Menu>
     );
@@ -229,18 +230,7 @@ const Header = (props: Props) => {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
                         <IconButton
-                            edge="end"
                             aria-label="account of current user"
                             aria-controls={menuId}
                             aria-haspopup="true"
@@ -248,6 +238,16 @@ const Header = (props: Props) => {
                             color="inherit"
                         >
                             <AccountCircle />
+                        </IconButton>
+                        <IconButton
+                            edge="end"
+                            aria-label="Logout"
+                            aria-controls={menuId}
+                            aria-haspopup="true"
+                            onClick={handleLogout}
+                            color="inherit"
+                        >
+                            <ExitToAppIcon />
                         </IconButton>
                     </div>
                     <div className={classes.sectionMobile}>

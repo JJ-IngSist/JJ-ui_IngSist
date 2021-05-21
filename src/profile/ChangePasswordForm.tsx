@@ -1,17 +1,17 @@
-import React, {ChangeEventHandler, Component} from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import {makeStyles} from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import React, {ChangeEventHandler} from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Avatar from "@material-ui/core/Avatar";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Container from "@material-ui/core/Container";
 
 function Copyright() {
     return (
@@ -27,7 +27,7 @@ function Copyright() {
 }
 
 type State = {
-    username: string
+    oldPassword: string
     password:  string
     isButtonDisabled: boolean
     helperText: string
@@ -35,10 +35,10 @@ type State = {
 };
 
 type Props = {
-    handleUsernameChange: ChangeEventHandler<HTMLInputElement>,
+    handleOldPasswordChange: ChangeEventHandler<HTMLInputElement>,
     handlePasswordChange: ChangeEventHandler<HTMLInputElement>,
     handleKeyPress: (event: React.KeyboardEvent) => void,
-    handleLogin : () => void,
+    handleUpdatePassword : () => void,
     state: State,
 }
 
@@ -88,30 +88,27 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
-export default function LoginForm(props: Props) {
+const ChangePasswordForm = (props: Props) => {
     const classes = useStyles();
 
-    return (
+    return(
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Change Password
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
                         error={props.state.isError}
                         fullWidth
-                        id="username"
-                        type="username"
-                        label="Username"
-                        placeholder="Username"
+                        id="oldPassword"
+                        type="password"
+                        label="Old Password"
+                        placeholder="Old Password"
                         margin="normal"
-                        onChange={props.handleUsernameChange}
+                        helperText={props.state.helperText}
+                        onChange={props.handleOldPasswordChange}
                         onKeyPress={props.handleKeyPress}
                     />
                     <TextField
@@ -119,42 +116,30 @@ export default function LoginForm(props: Props) {
                         fullWidth
                         id="password"
                         type="password"
-                        label="Password"
-                        placeholder="Password"
+                        label="New Password"
+                        placeholder="New Password"
                         margin="normal"
                         helperText={props.state.helperText}
                         onChange={props.handlePasswordChange}
                         onKeyPress={props.handleKeyPress}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
                     />
                     <Button
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={props.handleLogin}
+                        onClick={props.handleUpdatePassword}
                         disabled={props.state.isButtonDisabled}
                     >
-                        Sign In
+                        Update Password
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-
-                        </Grid>
-                        <Grid item>
-                            <Link href="/register" variant="body2">
-                                {"Don't have an account? Register"}
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </form>
             </div>
             <Box mt={8}>
                 <Copyright />
             </Box>
         </Container>
-    );
+    )
 }
+
+export default ChangePasswordForm;

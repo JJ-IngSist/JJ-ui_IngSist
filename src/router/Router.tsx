@@ -5,8 +5,8 @@ import Login from "../login/Login";
 import Register from "../register/Register";
 import ShowThread from "../thread/Thread";
 import ProfileView from "../profile/ProfileView";
-import OAuth2RedirectHandler from "../auth/OAuth2RedirectHandler";
 import AuthRoute from "./AuthRoute";
+import ChangePassword from "../profile/ChangePassword";
 
 const Router = () => {
 
@@ -16,8 +16,8 @@ const Router = () => {
                 <Route path={"/login"} component={Login}/>
                 <Route path={"/register"} component={Register}/>
                 <AuthRoute path={"/profile"} component={ProfileView}/>
+                <AuthRoute path={"/changePassword"} component={ChangePassword}/>
                 <Route path={"/thread/:id"} component={ShowThread}/>
-                <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
                 <Route path={"/"} component={MainPage}/>
             </Switch>
         </BrowserRouter>

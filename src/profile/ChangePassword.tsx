@@ -1,42 +1,42 @@
-import React, { useReducer, useEffect } from 'react';
-import LoginForm from "../auth/login";
+import Layout from "../layout/Layout";
+import React, {useEffect, useReducer} from "react";
+import ChangePasswordForm from "./ChangePasswordForm";
 import {post, userUrl} from "../utils/http";
 import {useHistory} from "react-router-dom";
-import {ACCESS_TOKEN} from "../Constants";
 
 type State = {
-    username: string
+    oldPassword: string
     password:  string
     isButtonDisabled: boolean
     helperText: string
     isError: boolean
 };
 
-type User = {
-    username: string,
+type ChangePassword = {
+    oldPassword: string
     password: string
 }
 
 const initialState:State = {
-    username: '',
+    oldPassword: '',
     password: '',
     isButtonDisabled: true,
     helperText: '',
     isError: false
 };
 
-type Action = { type: 'setUsername', payload: string }
+type Action = { type: 'setOldPassword', payload: string }
     | { type: 'setPassword', payload: string }
     | { type: 'setIsButtonDisabled', payload: boolean }
-    | { type: 'loginFailed', payload: string }
+    | { type: 'changeFailed', payload: string }
     | { type: 'setIsError', payload: boolean };
 
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case 'setUsername':
+        case 'setOldPassword':
             return {
                 ...state,
-                username: action.payload
+                oldPassword: action.payload
             };
         case 'setPassword':
             return {
@@ -48,7 +48,7 @@ const reducer = (state: State, action: Action): State => {
                 ...state,
                 isButtonDisabled: action.payload
             };
-        case 'loginFailed':
+        case 'changeFailed':
             return {
                 ...state,
                 helperText: action.payload,
@@ -62,11 +62,12 @@ const reducer = (state: State, action: Action): State => {
     }
 }
 
-const Login = () => {
+const ChangePassword = () => {
+
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        if (state.username.trim() && state.password.trim()) {
+        if (state.oldPassword.trim() && state.password.trim()) {
             dispatch({
                 type: 'setIsButtonDisabled',
                 payload: false
@@ -77,37 +78,30 @@ const Login = () => {
                 payload: true
             });
         }
-    }, [state.username, state.password]);
+    }, [state.oldPassword, state.password]);
 
     let history = useHistory();
 
-    const handleLogin = () => {
-        const user: User = {username: state.username, password: state.password};
+    const handlePasswordUpdate = () => {
+        const password: ChangePassword = {oldPassword: state.oldPassword, password: state.password};
         debugger
-        post(userUrl + "login", user, {noAuth: true}).then(
-            (response) => {
-                document.cookie=`token=${response.token.token};`
-                history.push('/')
-            }
-        ).catch(error => {
-            console.log(error)
-            dispatch({
-                        type: 'loginFailed',
-                        payload: 'Incorrect username or password'
-                    });
-        })
+        post(userUrl + 'changePassword', password)
+            .then(() => {
+                history.push('/profile')
+            })
+            .catch()
     }
 
     const handleKeyPress = (event: React.KeyboardEvent) => {
         if (event.keyCode === 13 || event.which === 13) {
-            state.isButtonDisabled || handleLogin();
+            state.isButtonDisabled || handlePasswordUpdate();
         }
     };
 
-    const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> =
+    const handleOldPasswordChange: React.ChangeEventHandler<HTMLInputElement> =
         (event) => {
             dispatch({
-                type: 'setUsername',
+                type: 'setOldPassword',
                 payload: event.target.value
             });
         };
@@ -120,9 +114,11 @@ const Login = () => {
             });
         };
 
-    return (
-        <LoginForm handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleKeyPress={handleKeyPress} handleLogin={handleLogin} state={state}/>
-    );
-};
+    return(
+        <div className="App">
+            <Layout child={<ChangePasswordForm handleOldPasswordChange={handleOldPasswordChange} handlePasswordChange={handlePasswordChange} handleUpdatePassword={handlePasswordUpdate} handleKeyPress={handleKeyPress} state={state}/>}/>
+        </div>
+    )
+}
 
-export default Login;
+export default ChangePassword;

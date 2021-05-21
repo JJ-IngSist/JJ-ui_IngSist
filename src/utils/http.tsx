@@ -6,13 +6,26 @@ type Config = {
     noAuth?: boolean,
 };
 
-const request = (url: string, method: string, body: Object | null, config: Config) => {
+type mapEntry = {
+    key: string,
+    value: string
+}
 
-    const token = localStorage['token'];
-    let headers = (!config.noAuth && token) ? {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-    } : {"Content-Type": "application/json"};
+const cleanCookies = (cookies: string) => {
+    let aux = cookies.split(';')
+    let map: mapEntry[] = aux.map<mapEntry>(a => {return {key: a.split('=')[0], value: a.split('=')[1]}});
+    return map.filter(m => m.key==='token')[0].value
+}
+
+const request = (url: string, method: string, body: Object | null, config: Config) => {
+    let headers : Object = {"Content-Type": "application/json"};
+    if (!config.noAuth) {
+        const token = cleanCookies(document.cookie);
+        headers = (token) ? {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+        } : {"Content-Type": "application/json"};
+    }
     const configuration: Object = {
         method: method,
         body: body ? JSON.stringify(body) : undefined,
