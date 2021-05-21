@@ -126,10 +126,6 @@ export default function LoginForm(props: Props) {
                         onChange={props.handlePasswordChange}
                         onKeyPress={props.handleKeyPress}
                     />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
                     <Button
                         fullWidth
                         variant="contained"
