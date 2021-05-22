@@ -100,7 +100,7 @@ const Register = () => {
             email: state.email.value,
             username: state.username.value,
             password: state.password.value};
-        post(userUrl + "register", user).then(
+        post(userUrl + "register", user, {noAuth: true}).then(
             () => {
                 history.push('/')
             }

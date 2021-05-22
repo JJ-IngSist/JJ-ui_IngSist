@@ -87,6 +87,7 @@ const Login = () => {
         post(userUrl + "login", user, {noAuth: true}).then(
             (response) => {
                 document.cookie=`token=${response.token.token};`
+                localStorage.setItem('id', response.id)
                 history.push('/')
             }
         ).catch(error => {

@@ -7,6 +7,8 @@ import ShowThread from "../thread/Thread";
 import ProfileView from "../profile/ProfileView";
 import AuthRoute from "./AuthRoute";
 import ChangePassword from "../profile/ChangePassword";
+import UserFollowing from "../follow/UserFollowing";
+import UserFollowers from "../follow/UserFollowers";
 
 const Router = () => {
 
@@ -15,8 +17,10 @@ const Router = () => {
             <Switch>
                 <Route path={"/login"} component={Login}/>
                 <Route path={"/register"} component={Register}/>
-                <AuthRoute path={"/profile"} component={ProfileView}/>
+                <AuthRoute path={"/profile/:id"} component={ProfileView}/>
                 <AuthRoute path={"/changePassword"} component={ChangePassword}/>
+                <Route path={"/user/:id/following"} component={UserFollowing}/>
+                <Route path={"/user/:id/followers"} component={UserFollowers}/>
                 <Route path={"/thread/:id"} component={ShowThread}/>
                 <Route path={"/"} component={MainPage}/>
             </Switch>

@@ -18,13 +18,15 @@ const cleanCookies = (cookies: string) => {
 }
 
 const request = (url: string, method: string, body: Object | null, config: Config) => {
-    let headers : Object = {"Content-Type": "application/json"};
+    let headers : Object = {"Content-Type": "application/json", Authorization: ""};
     if (!config.noAuth) {
         const token = cleanCookies(document.cookie);
+        debugger
         headers = (token) ? {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token
-        } : {"Content-Type": "application/json"};
+        } : {"Content-Type": "application/json",
+            Authorization: ""};
     }
     const configuration: Object = {
         method: method,
@@ -52,7 +54,6 @@ const request = (url: string, method: string, body: Object | null, config: Confi
         })
         // Catch connection errors and the error throw above.
         .catch(error => {
-            debugger
             throw(error)
         })
 }

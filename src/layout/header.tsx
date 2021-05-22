@@ -122,12 +122,13 @@ const Header = (props: Props) => {
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const handleProfileMenuOpen = () => {
-        let path = `/profile`;
+        let path = `/profile/` + localStorage.getItem('id');
         history.push(path);
     }
 
     const handleLogout = () => {
         document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+        localStorage.removeItem('id')
         history.push('/login');
     }
 
