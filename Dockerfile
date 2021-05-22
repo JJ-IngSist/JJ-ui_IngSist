@@ -5,7 +5,7 @@ FROM node:10-alpine as builder
 COPY package.json package-lock.json ./
 
 # Install the dependencies and make the folder
-RUN npm install && mkdir /jj-ui-ingsis && mv ./node_modules ./jj-ui-ingsis
+RUN npm install
 
 WORKDIR /jj-ui-ingsis
 
