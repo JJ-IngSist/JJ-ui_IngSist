@@ -3,7 +3,8 @@ export type User = {
     name: string,
     username: string,
     email?: string,
-    password?: string
+    password?: string,
+    description?: string
 }
 
 export type Post = {
@@ -18,4 +19,9 @@ export type Post = {
     username?: string,
     email?: string,
     threadId?: number
+}
+
+export type ChangePassword = {
+    oldPassword: string,
+    password: string,
 }

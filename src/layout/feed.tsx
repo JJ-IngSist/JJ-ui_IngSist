@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import {Post} from "../utils/models";
+import {Post, User} from "../utils/models";
 import InputPost from "../post/InputPost";
 import {post, postUrl} from '../utils/http';
 import PostView from "../post/PostView";
@@ -10,6 +10,7 @@ type Props = {
     posts: Post[]
     firsts: Post[]
     setPosts: (posts: Post[]) => void
+    user: User
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -48,7 +49,7 @@ const Feed = (props: Props) => {
 
     return (
         <div>
-            <InputPost addPost={addPost}/>
+            {props.user.id === +localStorage.getItem('id') && +localStorage.getItem('id') !== 0 ? <InputPost addPost={addPost}/> : <></>}
             <List className={classes.root}>
                 {props.posts.map((row, index) => (
                     <PostView key={index} post={row}/>
