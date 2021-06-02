@@ -72,6 +72,10 @@ const PostView = (props: Props) => {
             .catch()
     }
 
+    const goToUser = (id: number) => {
+      history.push('/profile/' + id)
+    }
+
     return (
         <div>
             <ListItem alignItems="flex-start">
@@ -81,16 +85,18 @@ const PostView = (props: Props) => {
                 <ListItemText
                     primary={
                         <div className={classes.flex}>
+                          <div onClick={() => goToUser(thePost.user)}>
                             {thePost.username}
-                            <div>
-                                <Typography
-                                    component="span"
-                                    variant="body2"
-                                    color="textPrimary"
-                                >
-                                    {thePost.date}
-                                </Typography>
-                            </div>
+                          </div>
+                          <div>
+                              <Typography
+                                  component="span"
+                                  variant="body2"
+                                  color="textPrimary"
+                              >
+                                  {thePost.date}
+                              </Typography>
+                          </div>
                         </div>
                     }
                     secondary={

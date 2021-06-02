@@ -10,11 +10,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
+import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 import SearchIcon from '@material-ui/icons/Search';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ChatIcon from '@material-ui/icons/Chat';
 import Header from "./header";
 import clsx from "clsx";
+import {useHistory} from "react-router-dom";
 
 export const drawerWidth = 240;
 
@@ -68,60 +70,62 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const drawerOptions = [
-    {name: 'Home', icon: <HomeIcon />},
-    {name: 'Search', icon: <SearchIcon />},
-    {name: 'Notifications', icon: <NotificationsIcon/>},
-    {name: 'Messages', icon: <ChatIcon/>}
-]
 
 export default function Layout(props: Props) {
-    const classes = useStyles();
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+  const history = useHistory();
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
+  const drawerOptions = [
+    {name: 'Home', icon: <HomeIcon />, action: () => history.push('/')},
+    {name: 'Feed', icon: <DynamicFeedIcon/>, action: () => history.push('/feed')},
+    {name: 'Search', icon: <SearchIcon />, action: () => history.push('/')},
+    {name: 'Messages', icon: <ChatIcon/>, action: () => history.push('/')}
+  ]
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+  const handleDrawerOpen = () => {
+      setOpen(true);
+  };
 
-    return (
-        <div>
-            <Header handleDrawerOpen={handleDrawerOpen} openDrawer={open} drawerWidth={drawerWidth}/>
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor="left"
-                open={open}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <div className={classes.drawerHeader}>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    {drawerOptions.map((row, index) => (
-                        <ListItem button key={row.name}>
-                            <ListItemIcon>{row.icon}</ListItemIcon>
-                            <ListItemText primary={row.name} />
-                        </ListItem>
-                    ))}
-                </List>
-            </Drawer>
-            <main className={clsx(classes.content, {
-                [classes.contentShift]: open,
-            })}>
-                <header className={"App-header"}>
-                    {props.child}
-                </header>
-            </main>
-        </div>
-    );
+  const handleDrawerClose = () => {
+      setOpen(false);
+  };
+
+  return (
+    <div>
+      <Header handleDrawerOpen={handleDrawerOpen} openDrawer={open} drawerWidth={drawerWidth}/>
+      <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+              paper: classes.drawerPaper,
+          }}
+      >
+          <div className={classes.drawerHeader}>
+              <IconButton onClick={handleDrawerClose}>
+                  {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              </IconButton>
+          </div>
+          <Divider />
+          <List>
+              {drawerOptions.map((row, index) => (
+                  <ListItem button key={row.name} onClick={row.action}>
+                      <ListItemIcon>{row.icon}</ListItemIcon>
+                      <ListItemText primary={row.name} />
+                  </ListItem>
+              ))}
+          </List>
+      </Drawer>
+      <main className={clsx(classes.content, {
+          [classes.contentShift]: open,
+      })}>
+          <header className={"App-header"}>
+              {props.child}
+          </header>
+      </main>
+    </div>
+  );
 }

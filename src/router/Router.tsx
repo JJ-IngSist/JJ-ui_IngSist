@@ -9,6 +9,7 @@ import AuthRoute from "./AuthRoute";
 import ChangePassword from "../profile/ChangePassword";
 import UserFollowing from "../follow/UserFollowing";
 import UserFollowers from "../follow/UserFollowers";
+import FeedView from "../mainpage/FeedView";
 
 const Router = () => {
 
@@ -22,7 +23,8 @@ const Router = () => {
                 <Route path={"/user/:id/following"} component={UserFollowing}/>
                 <Route path={"/user/:id/followers"} component={UserFollowers}/>
                 <Route path={"/thread/:id"} component={ShowThread}/>
-                <Route path={"/"} component={MainPage}/>
+                <Route path={"/feed"} component={FeedView}/>
+                <AuthRoute path={"/"} component={MainPage}/>
             </Switch>
         </BrowserRouter>
     )
