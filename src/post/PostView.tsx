@@ -9,10 +9,10 @@ import {Checkbox, FormControlLabel, IconButton, Link} from "@material-ui/core";
 import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import Divider from "@material-ui/core/Divider";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {post, userUrl} from "../utils/http";
-import Button from "@material-ui/core/Button";
-import CommentIcon from '@material-ui/icons/Comment';
+import {del, post, postUrl, userUrl} from "../utils/http";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import {useHistory} from "react-router-dom";
 
 type Props = {
     post: Post
@@ -48,6 +48,7 @@ const PostView = (props: Props) => {
     const classes = useStyles();
     const [isChecked, setChecked] = React.useState<boolean>(props.post.liked || false);
     const [thePost, setThePost] = React.useState<Post>(props.post);
+    const history = useHistory();
 
     const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
@@ -63,8 +64,13 @@ const PostView = (props: Props) => {
                     setThePost({...thePost, liked: isChecked, likes: thePost.likes ? thePost.likes-1: 0}))
                 .catch(err => console.log(err))
         }
-
     };
+
+    const handleDelete = () => {
+        del(postUrl + 'post/' + props.post.id)
+            .then(() => history.push('/'))
+            .catch()
+    }
 
     return (
         <div>
@@ -108,6 +114,11 @@ const PostView = (props: Props) => {
                                               defaultChecked={isChecked}/>}
                                 label={thePost.likes}
                             />
+                            {thePost.user === +localStorage.getItem('id') &&
+                            <IconButton aria-label="delete" className={classes.comment} onClick={handleDelete}>
+                                <DeleteOutlineIcon />
+                            </IconButton>
+                            }
                         </div>
                     }
                 />

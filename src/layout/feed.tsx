@@ -41,7 +41,7 @@ const Feed = (props: Props) => {
     const classes = useStyles();
 
     const addPost = (thePost: Post) => {
-        post(postUrl + 'post', {text: thePost.text, user: thePost.userId, thread: thePost.threadId })
+        post(postUrl + 'post', {text: thePost.text, user: thePost.user, thread: thePost.threadId })
             .then(res =>
                 props.setPosts([...props.posts, res]))
             .catch(err => console.log(err.message))

@@ -14,8 +14,6 @@ import {
 import { AccountCircle } from "@material-ui/icons";
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import clsx from "clsx";
 import {drawerWidth} from "./Layout";

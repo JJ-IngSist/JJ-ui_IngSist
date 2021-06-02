@@ -14,8 +14,7 @@ export type Post = {
     likes?: number,
     liked?: boolean,
     text: string,
-    userId?: number,
-    lastname?: string,
+    user?: number,
     username?: string,
     email?: string,
     threadId?: number
