@@ -9,7 +9,7 @@ import {
     makeStyles,
     Menu, Theme,
     Toolbar,
-    Typography, MenuItem, Link
+    Typography, MenuItem, Link, ClickAwayListener
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -124,6 +124,7 @@ const Header = (props: Props) => {
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
     const [users, setUsers] = React.useState<User[]>([])
     const [list, setList] = React.useState<User[]>([])
+    const [open, setOpen] = React.useState(false);
     let searchText = ''
 
     useEffect(() => {
@@ -133,6 +134,14 @@ const Header = (props: Props) => {
             })
             .catch()
     }, [])
+
+    const handleClick = () => {
+        setOpen((prev) => !prev);
+    };
+
+    const handleClickAway = () => {
+        setOpen(false);
+    };
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -237,25 +246,30 @@ const Header = (props: Props) => {
                     <Typography className={classes.title} variant="h6" noWrap>
                         Jibber Jabber
                     </Typography>
-                    <div className={classes.search_result}>
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
+                    <ClickAwayListener onClickAway={handleClickAway}>
+                        <div className={classes.search_result}>
+                            <div className={classes.search}>
+                                <div className={classes.searchIcon}>
+                                    <SearchIcon />
+                                </div>
+                                <InputBase
+                                    placeholder={searchText}
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    onClick={handleClick}
+                                    inputProps={{ 'aria-label': 'search' }}
+                                    onChange={handleSearch}
+                                />
                             </div>
-                            <InputBase
-                                placeholder={searchText}
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                                inputProps={{ 'aria-label': 'search' }}
-                                onChange={handleSearch}
-                            />
+                            {open ? (
+                                <div>
+                                    <ShowUsers users={list}/>
+                                </div>
+                            ) : null}
                         </div>
-                        <div>
-                            <ShowUsers users={list}/>
-                        </div>
-                    </div>
+                    </ClickAwayListener>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <IconButton
