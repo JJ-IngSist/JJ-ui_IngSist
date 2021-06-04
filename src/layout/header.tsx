@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
     AppBar,
     Badge,
@@ -9,7 +9,7 @@ import {
     makeStyles,
     Menu, Theme,
     Toolbar,
-    Typography, MenuItem
+    Typography, MenuItem, Link
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -19,6 +19,10 @@ import clsx from "clsx";
 import {drawerWidth} from "./Layout";
 import {useHistory} from "react-router-dom";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import {get, userUrl} from "../utils/http";
+import {User} from "../utils/models";
+import {render} from "react-dom";
+import ShowUsers from "./ShowUsers";
 
 type Props = {
     handleDrawerOpen: () => void,
@@ -106,6 +110,9 @@ const useStyles = makeStyles((theme: Theme) =>
         hide: {
             display: 'none',
         },
+        search_result: {
+
+        }
     }),
 );
 
@@ -115,6 +122,17 @@ const Header = (props: Props) => {
     const history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [users, setUsers] = React.useState<User[]>([])
+    const [list, setList] = React.useState<User[]>([])
+    let searchText = ''
+
+    useEffect(() => {
+        get(userUrl + 'users')
+            .then(res => {
+                setUsers(res)
+            })
+            .catch()
+    }, [])
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -195,6 +213,11 @@ const Header = (props: Props) => {
         </Menu>
     );
 
+    const handleSearch = (event) => {
+        searchText = event.target.value
+        setList(users.filter((u) => u.username.toLowerCase().match(searchText)))
+    }
+
     return (
         <div className={classes.grow}>
             <AppBar position="fixed"
@@ -214,18 +237,24 @@ const Header = (props: Props) => {
                     <Typography className={classes.title} variant="h6" noWrap>
                         Jibber Jabber
                     </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
+                    <div className={classes.search_result}>
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                                placeholder={searchText}
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ 'aria-label': 'search' }}
+                                onChange={handleSearch}
+                            />
                         </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
+                        <div>
+                            <ShowUsers users={list}/>
+                        </div>
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
