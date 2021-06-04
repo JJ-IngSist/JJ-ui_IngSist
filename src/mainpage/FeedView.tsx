@@ -11,7 +11,7 @@ const FeedView = () => {
   const user: User = {id: +localStorage.getItem('id'), name: '', username: '', email: '', description: '', password: ''}
 
   const loadPosts = () => {
-    get(postUrl + "posts/most-liked", {noAuth: true}).then(
+    get(postUrl + "posts/most-liked").then(
       res => {
         setPosts(res.map((p: { madeByFollowed: any; }) => p.madeByFollowed))
         setFirsts(res.map((p: { firstOfThread: any; }) => p.firstOfThread))

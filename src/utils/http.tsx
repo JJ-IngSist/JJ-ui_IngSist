@@ -12,9 +12,11 @@ type mapEntry = {
 }
 
 const cleanCookies = (cookies: string) => {
-    let aux = cookies.split(';')
-    let map: mapEntry[] = aux.map<mapEntry>(a => {return {key: a.split('=')[0], value: a.split('=')[1]}});
-    return map.filter(m => m.key==='token')[0].value
+    if (cookies) {
+        let aux = cookies.split(';')
+        let map: mapEntry[] = aux.map<mapEntry>(a => {return {key: a.split('=')[0], value: a.split('=')[1]}});
+        return map.filter(m => m.key==='token')[0].value
+    } else return ""
 }
 
 const request = (url: string, method: string, body: Object | null, config: Config) => {
