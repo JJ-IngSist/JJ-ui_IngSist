@@ -81,7 +81,7 @@ export default function Layout(props: Props) {
     {name: 'Home', icon: <HomeIcon />, action: () => history.push('/')},
     {name: 'Feed', icon: <DynamicFeedIcon/>, action: () => history.push('/feed')},
     {name: 'Search', icon: <SearchIcon />, action: () => history.push('/')},
-    {name: 'Messages', icon: <ChatIcon/>, action: () => history.push('/')}
+    {name: 'Messages', icon: <ChatIcon/>, action: () => history.push('/dms')}
   ]
 
   const handleDrawerOpen = () => {
