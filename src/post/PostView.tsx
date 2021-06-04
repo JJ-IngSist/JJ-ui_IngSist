@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Post} from "../utils/models";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -9,7 +9,7 @@ import {Checkbox, FormControlLabel, IconButton, Link} from "@material-ui/core";
 import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import Divider from "@material-ui/core/Divider";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {del, post, postUrl, userUrl} from "../utils/http";
+import {del, get, post, postUrl, userUrl} from "../utils/http";
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import {useHistory} from "react-router-dom";
@@ -47,8 +47,19 @@ const useStyles = makeStyles((theme: Theme) =>
 const PostView = (props: Props) => {
     const classes = useStyles();
     const [isChecked, setChecked] = React.useState<boolean>(props.post.liked || false);
+    const [amountOfPosts, setAmountOfPosts] = React.useState<number>(0)
+    // @ts-ignore
+    props.post.date = props.post.date.substring(0, 10)
     const [thePost, setThePost] = React.useState<Post>(props.post);
     const history = useHistory();
+
+    useEffect(() => {
+        get(postUrl + 'post/' + props.post.id + '/amount-thread')
+            .then(res => {
+                setAmountOfPosts(res)
+            })
+            .catch()
+    }, [])
 
     const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
@@ -130,14 +141,16 @@ const PostView = (props: Props) => {
                 />
             </ListItem>
 
+            {amountOfPosts > 0 &&
             <Link
                 className={classes.thread}
                 component="button"
                 variant="body2"
                 onClick={() => {console.info("I'm a button.");}}
             >
-                View Thread ({thePost.likes})
-            </Link>
+                View Thread ({amountOfPosts})
+            </Link>}
+
             <Divider variant="inset" component="li" />
         </div>
     )

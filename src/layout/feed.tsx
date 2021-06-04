@@ -18,10 +18,11 @@ type Props = {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            width: '100%',
+            width: '25ch',
             maxWidth: '26ch',
             backgroundColor: theme.palette.background.paper,
-            borderRadius: '10px'
+            borderRadius: '10px',
+            margin: '8px'
         },
         inline: {
             display: 'inline',
