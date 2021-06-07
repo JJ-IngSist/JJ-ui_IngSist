@@ -21,7 +21,6 @@ const request = (url: string, method: string, body: Object | null, config: Confi
     let headers : Object = {"Content-Type": "application/json", Authorization: ""};
     if (!config.noAuth) {
         const token = cleanCookies(document.cookie);
-        debugger
         headers = (token) ? {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token

@@ -84,7 +84,6 @@ const ChangePassword = () => {
 
     const handlePasswordUpdate = () => {
         const password: ChangePassword = {oldPassword: state.oldPassword, password: state.password};
-        debugger
         post(userUrl + 'changePassword', password)
             .then(() => {
                 history.push('/profile')

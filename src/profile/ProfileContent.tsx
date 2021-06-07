@@ -34,7 +34,6 @@ const ProfileContent = (props: Props) => {
                 setFollowing(res)
             })
             .catch()
-        debugger
         get(userUrl + 'user/' + props.user.id + '/is-following')
             .then(res => {
                 setFollow(res)
