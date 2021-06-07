@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
     AppBar,
     Badge,
@@ -9,18 +9,20 @@ import {
     makeStyles,
     Menu, Theme,
     Toolbar,
-    Typography, MenuItem
+    Typography, MenuItem, Link, ClickAwayListener
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import clsx from "clsx";
 import {drawerWidth} from "./Layout";
 import {useHistory} from "react-router-dom";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import {get, userUrl} from "../utils/http";
+import {User} from "../utils/models";
+import {render} from "react-dom";
+import ShowUsers from "./ShowUsers";
 
 type Props = {
     handleDrawerOpen: () => void,
@@ -108,6 +110,9 @@ const useStyles = makeStyles((theme: Theme) =>
         hide: {
             display: 'none',
         },
+        search_result: {
+
+        }
     }),
 );
 
@@ -117,6 +122,26 @@ const Header = (props: Props) => {
     const history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [users, setUsers] = React.useState<User[]>([])
+    const [list, setList] = React.useState<User[]>([])
+    const [open, setOpen] = React.useState(false);
+    let searchText = ''
+
+    useEffect(() => {
+        get(userUrl + 'users')
+            .then(res => {
+                setUsers(res)
+            })
+            .catch()
+    }, [])
+
+    const handleClick = () => {
+        setOpen((prev) => !prev);
+    };
+
+    const handleClickAway = () => {
+        setOpen(false);
+    };
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -197,6 +222,11 @@ const Header = (props: Props) => {
         </Menu>
     );
 
+    const handleSearch = (event) => {
+        searchText = event.target.value
+        setList(users.filter((u) => u.username.toLowerCase().match(searchText)))
+    }
+
     return (
         <div className={classes.grow}>
             <AppBar position="fixed"
@@ -216,19 +246,30 @@ const Header = (props: Props) => {
                     <Typography className={classes.title} variant="h6" noWrap>
                         Jibber Jabber
                     </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
+                    <ClickAwayListener onClickAway={handleClickAway}>
+                        <div className={classes.search_result}>
+                            <div className={classes.search}>
+                                <div className={classes.searchIcon}>
+                                    <SearchIcon />
+                                </div>
+                                <InputBase
+                                    placeholder={searchText}
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    onClick={handleClick}
+                                    inputProps={{ 'aria-label': 'search' }}
+                                    onChange={handleSearch}
+                                />
+                            </div>
+                            {open ? (
+                                <div>
+                                    <ShowUsers users={list}/>
+                                </div>
+                            ) : null}
                         </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
+                    </ClickAwayListener>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <IconButton

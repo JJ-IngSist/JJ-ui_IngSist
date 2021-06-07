@@ -6,7 +6,7 @@ import ThreadView from "../layout/thread";
 
 const ShowThread = (id: string) => {
 
-    const [first, setFirst] = React.useState<Post>({id: 0, username: '', lastname: '', name: '', email: '', likes: 0, userId: 0, liked: false, threadId: 0, date: null, text: ''});
+    const [first, setFirst] = React.useState<Post>({id: 0, username: '', name: '', email: '', likes: 0, user: 0, liked: false, threadId: 0, date: null, text: ''});
     const [posts, setPosts] = React.useState<Post[]>([]);
 
     const loadPosts = () => {

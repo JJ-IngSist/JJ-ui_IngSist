@@ -7,7 +7,7 @@ const AuthRoute = ({component: Component, ...rest}) => {
             render={props => {
                 if (document.cookie) return <Component {... rest} {...props}/>;
                 return <Redirect to={{
-                    pathname: '/login',
+                    pathname: '/feed',
                     state: {from: props.location}
                 }}/>;
             }}/>

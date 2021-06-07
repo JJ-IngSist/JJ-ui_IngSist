@@ -102,7 +102,7 @@ const Register = () => {
             password: state.password.value};
         post(userUrl + "register", user, {noAuth: true}).then(
             () => {
-                history.push('/')
+                history.push('/login')
             }
         ).catch(() => {
             //falta dependiendo los errores del back que falle cada field en especifico.
