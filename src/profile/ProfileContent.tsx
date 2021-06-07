@@ -24,12 +24,12 @@ const ProfileContent = (props: Props) => {
 
     useEffect(() => {
         setUser(props.user)
-        get(userUrl + 'user/' + props.user.id + '/amount-followers')
+        get(userUrl + 'user/' + props.user.id + '/amount-following')
             .then(res => {
                 setFollowers(res)
             })
             .catch()
-        get(userUrl + 'user/' + props.user.id + '/amount-following')
+        get(userUrl + 'user/' + props.user.id + '/amount-followed')
             .then(res => {
                 setFollowing(res)
             })
@@ -52,10 +52,16 @@ const ProfileContent = (props: Props) => {
 
     const handleFollow = () => {
         if (follow) {
-            post(userUrl + 'user/' + props.user.id + '/unfollow', {})
+            post(userUrl + 'user/' + props.user.id + '/unfollow', {}).then(() => {
+                setFollow(false)
+                setFollowers(followers-1)
+            })
                 .catch()
         } else {
-            post(userUrl + 'user/' + props.user.id + '/follow', {})
+            post(userUrl + 'user/' + props.user.id + '/follow', {}).then(() => {
+                setFollow(true)
+                setFollowers(followers+1)
+            })
                 .catch()
         }
     }
