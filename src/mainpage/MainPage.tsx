@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {get, postUrl} from '../utils/http';
 import Layout from '../layout/Layout';
-import Feed from '../layout/feed';
 import {Post, User} from '../utils/models';
+import Following from "../layout/following";
 
 const MainPage = () => {
 
@@ -11,7 +11,7 @@ const MainPage = () => {
     const user: User = {id: +localStorage.getItem('id'), name: '', username: '', email: '', description: '', password: ''}
 
     const loadPosts = () => {
-        get(postUrl + "posts/most-liked", {noAuth: true}).then(
+        get(postUrl + "home/posts").then(
             res => {
                 setPosts(res.map((p: { madeByFollowed: any; }) => p.madeByFollowed))
                 setFirsts(res.map((p: { firstOfThread: any; }) => p.firstOfThread))
@@ -27,7 +27,7 @@ const MainPage = () => {
 
     return (
         <div className="App">
-            <Layout child={<Feed posts={posts} setPosts={setPosts} firsts={firsts} user={user}/>}/>
+            <Layout child={<Following posts={posts} firsts={firsts}/>}/>
         </div>
     )
 }
