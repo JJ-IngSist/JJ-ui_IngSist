@@ -83,7 +83,6 @@ const Login = () => {
 
     const handleLogin = () => {
         const user: User = {username: state.username, password: state.password};
-        debugger
         post(userUrl + "login", user, {noAuth: true}).then(
             (response) => {
                 document.cookie=`token=${response.token.token};`

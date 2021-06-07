@@ -1,5 +1,5 @@
-export const userUrl = "http://localhost:8080/";
-export const postUrl = "http://localhost:8081/";
+export const userUrl = "/api/user/";
+export const postUrl = "/api/post/";
 
 type Config = {
     headers?: Object | null,
@@ -23,7 +23,6 @@ const request = (url: string, method: string, body: Object | null, config: Confi
     let headers : Object = {"Content-Type": "application/json", Authorization: ""};
     if (!config.noAuth) {
         const token = cleanCookies(document.cookie);
-        debugger
         headers = (token) ? {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token
