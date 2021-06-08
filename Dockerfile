@@ -2,7 +2,7 @@
 FROM node:10-alpine as builder
 
 # copy the package.json to install dependencies
-COPY package.json yarn-lock.json ./
+COPY package.json yarn.lock ./
 
 # Install the dependencies and make the folder
 RUN yarn install && mkdir /jj-ui-ingsis && mv ./node_modules ./jj-ui-ingsis
