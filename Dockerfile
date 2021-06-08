@@ -1,17 +1,32 @@
-# build environment
-FROM node:15-alpine as build
-WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
-COPY package.json ./
-COPY yarn-lock.json ./
-RUN yarn autoclean --init
-#RUN npm install react-scripts@3.4.1 -g
-COPY . ./
+# stage1 as builder
+FROM node:10-alpine as builder
+
+# copy the package.json to install dependencies
+COPY package.json yarn-lock.json ./
+
+# Install the dependencies and make the folder
+RUN yarn install && mkdir /jj-ui-ingsis && mv ./node_modules ./jj-ui-ingsis
+
+WORKDIR /jj-ui-ingsis 
+
+COPY . .
+
+# Build the project and copy the files
 RUN yarn run build
 
-# production environment
-FROM nginx:stable-alpine
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+FROM nginx:alpine
+
+#!/bin/sh
+
+COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
+
+## Remove default nginx index page
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy from the stahg 1
+COPY --from=builder /jj-ui-ingsis/build /usr/share/nginx/html
+
+EXPOSE 3000 80
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
