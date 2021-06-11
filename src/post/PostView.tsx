@@ -15,7 +15,8 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import {useHistory} from "react-router-dom";
 
 type Props = {
-    post: Post
+    post: Post,
+    amount: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -141,12 +142,12 @@ const PostView = (props: Props) => {
                 />
             </ListItem>
 
-            {amountOfPosts > 0 &&
+            {amountOfPosts > 0 && props.amount &&
             <Link
                 className={classes.thread}
                 component="button"
                 variant="body2"
-                onClick={() => {console.info("I'm a button.");}}
+                onClick={() => {history.push('thread/' + thePost.threadId)}}
             >
                 View Thread ({amountOfPosts})
             </Link>}

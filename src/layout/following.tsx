@@ -42,7 +42,7 @@ const Following = (props: Props) => {
     <div>
       <List className={classes.root}>
         {props.posts.length !== 0 ? props.posts.map((row, index) => (
-          <PostView key={index} post={row}/>
+          <PostView key={index} post={row} amount={true}/>
         )) : <p>No posts yet! Go follow some people</p>}
       </List>
     </div>
