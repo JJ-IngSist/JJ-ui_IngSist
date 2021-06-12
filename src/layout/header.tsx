@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import {
     AppBar,
-    Badge,
     createStyles,
     fade,
     IconButton,
@@ -9,7 +8,7 @@ import {
     makeStyles,
     Menu, Theme,
     Toolbar,
-    Typography, MenuItem, Link, ClickAwayListener
+    Typography, MenuItem, ClickAwayListener
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -21,7 +20,6 @@ import {useHistory} from "react-router-dom";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {get, userUrl} from "../utils/http";
 import {User} from "../utils/models";
-import {render} from "react-dom";
 import ShowUsers from "./ShowUsers";
 
 type Props = {
@@ -127,13 +125,13 @@ const Header = (props: Props) => {
     const [open, setOpen] = React.useState(false);
     let searchText = ''
 
-    useEffect(() => {
-        get(userUrl + 'users')
-            .then(res => {
-                setUsers(res)
-            })
-            .catch()
-    }, [])
+    // useEffect(() => {
+    //     get(userUrl + 'users')
+    //         .then(res => {
+    //             setUsers(res)
+    //         })
+    //         .catch()
+    // }, [])
 
     const handleClick = () => {
         setOpen((prev) => !prev);

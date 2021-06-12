@@ -1,6 +1,6 @@
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import React from "react";
-import {Avatar, Divider, Link, List, ListItem, ListItemAvatar, ListItemText, Typography} from "@material-ui/core";
+import {Avatar, Divider, Link, List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
 import {User} from "../utils/models";
 
 type Props = {

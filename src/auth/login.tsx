@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, Component} from 'react';
+import React, {ChangeEventHandler} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,29 +10,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {Copyright} from "./register";
+import {State} from "../login/Login";
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit">
-                Jibber Jabber - Universidad Austral
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-type State = {
-    username: string
-    password:  string
-    isButtonDisabled: boolean
-    helperText: string
-    isError: boolean
-};
-
-type Props = {
+export type Props = {
     handleUsernameChange: ChangeEventHandler<HTMLInputElement>,
     handlePasswordChange: ChangeEventHandler<HTMLInputElement>,
     handleKeyPress: (event: React.KeyboardEvent) => void,

@@ -12,7 +12,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 import SearchIcon from '@material-ui/icons/Search';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import ChatIcon from '@material-ui/icons/Chat';
 import Header from "./header";
 import clsx from "clsx";

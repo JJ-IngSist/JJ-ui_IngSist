@@ -1,9 +1,7 @@
 import React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import {Post, User} from "../utils/models";
-import InputPost from "../post/InputPost";
-import {post, postUrl} from '../utils/http';
+import {Post} from "../utils/models";
 import PostView from "../post/PostView";
 
 type Props = {
