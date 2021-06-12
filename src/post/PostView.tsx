@@ -63,19 +63,20 @@ const PostView = (props: Props) => {
     }, [])
 
     const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(event.target.checked);
-        if(event.target.checked) {
-            post(userUrl + 'user/like/' + props.post.id, {})
-                .then(() =>
-                    setThePost({...thePost, liked: isChecked, likes: thePost.likes ? thePost.likes+1: 1})
-                )
-                .catch(err => console.log(err))
-        } else {
-            post(userUrl + 'user/dislike/' + props.post.id, {})
-                .then(() =>
-                    setThePost({...thePost, liked: isChecked, likes: thePost.likes ? thePost.likes-1: 0}))
-                .catch(err => console.log(err))
-        }
+      setChecked(event.target.checked);
+      if (event.target.checked) {
+        post(userUrl + 'user/like/' + props.post.id, {})
+          .then(() =>
+            setThePost({...thePost, liked: isChecked, likes: thePost.likes ? thePost.likes + 1 : 1})
+          )
+          .catch(err => console.log(err))
+      } else {
+        post(userUrl + 'user/dislike/' + props.post.id, {})
+          .then(() =>
+            setThePost({...thePost, liked: isChecked, likes: thePost.likes ? thePost.likes - 1 : 0}))
+          .catch(err => console.log(err))
+      }
+    }
 
     const handleDelete = () => {
         del(postUrl + 'post/' + props.post.id)
