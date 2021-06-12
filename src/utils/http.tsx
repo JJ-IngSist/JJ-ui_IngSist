@@ -1,5 +1,7 @@
 export const userUrl = "/api/user/";
 export const postUrl = "/api/post/";
+// export const userUrl = "http://localhost:8080/";
+// export const postUrl = "http://localhost:8081/";
 
 type Config = {
     headers?: Object | null,
@@ -25,8 +27,10 @@ const request = (url: string, method: string, body: Object | null, config: Confi
         const token = cleanCookies(document.cookie);
         headers = (token) ? {
             "Content-Type": "application/json",
+            'Accept': 'application/json',
             Authorization: "Bearer " + token
         } : {"Content-Type": "application/json",
+            'Accept': 'application/json',
             Authorization: ""};
     }
     const configuration: Object = {

@@ -1,8 +1,6 @@
 import React, {Fragment, useState} from "react";
 import Conversation from "./Conversation";
 import "./chat.scss";
-import Following from "../layout/following";
-import Layout from "../layout/Layout";
 import UserPanel from "./UserPanel";
 import {User} from "../utils/models";
 

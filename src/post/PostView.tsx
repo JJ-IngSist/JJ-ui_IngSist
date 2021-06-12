@@ -15,7 +15,8 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import {useHistory} from "react-router-dom";
 
 type Props = {
-    post: Post
+    post: Post,
+    amount: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -75,7 +76,6 @@ const PostView = (props: Props) => {
                     setThePost({...thePost, liked: isChecked, likes: thePost.likes ? thePost.likes-1: 0}))
                 .catch(err => console.log(err))
         }
-    };
 
     const handleDelete = () => {
         del(postUrl + 'post/' + props.post.id)
@@ -146,7 +146,7 @@ const PostView = (props: Props) => {
                 className={classes.thread}
                 component="button"
                 variant="body2"
-                onClick={() => {console.info("I'm a button.");}}
+                onClick={() => {history.push('thread/' + thePost.threadId)}}
             >
                 View Thread ({amountOfPosts})
             </Link>}

@@ -13,8 +13,8 @@ const ShowThread = (id: string) => {
         // @ts-ignore
         get(postUrl + "thread/" + id.match.params.id).then(
             res => {
-                setFirst(res.posts.filter(v => res.firstPostId === v.id))
-                setPosts(res.posts.filter(v => res.firstPostId !== v.id))
+                setFirst(res.firstPost)
+                setPosts(res.posts)
             }
         ).catch( err => {
             console.log(err);

@@ -1,14 +1,13 @@
 import React, {useEffect} from 'react';
 import {get, postUrl} from '../utils/http';
 import Layout from '../layout/Layout';
-import {Post, User} from '../utils/models';
+import {Post} from '../utils/models';
 import Following from "../layout/following";
 
 const MainPage = () => {
 
     const [posts, setPosts] = React.useState<Post[]>([]);
     const [firsts, setFirsts] = React.useState<Post[]>([]);
-    const user: User = {id: +localStorage.getItem('id'), name: '', username: '', email: '', description: '', password: ''}
 
     const loadPosts = () => {
         get(postUrl + "home/posts").then(

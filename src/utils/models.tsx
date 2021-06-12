@@ -17,7 +17,8 @@ export type Post = {
     user?: number,
     username?: string,
     email?: string,
-    threadId?: number
+    threadId?: number,
+    first?:boolean
 }
 
 export type ChangePassword = {

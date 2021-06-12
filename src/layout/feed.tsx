@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
             maxWidth: '26ch',
             backgroundColor: theme.palette.background.paper,
             borderRadius: '10px',
-            margin: '8px'
+            margin: '8px',
         },
         inline: {
             display: 'inline',
@@ -61,7 +61,7 @@ const Feed = (props: Props) => {
         {+localStorage.getItem('id') === 0 ? <Button onClick={goToLogin}> Login </Button> : <></>}
           <List className={classes.root}>
             {props.posts !== [] ? props.posts.map((row, index) => (
-              <PostView key={index} post={row}/>
+              <PostView key={index} post={row} amount={true}/>
             )) : <p> No posts yet! </p>}
           </List>
       </div>
