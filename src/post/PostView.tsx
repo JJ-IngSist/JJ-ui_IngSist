@@ -76,7 +76,6 @@ const PostView = (props: Props) => {
                     setThePost({...thePost, liked: isChecked, likes: thePost.likes ? thePost.likes-1: 0}))
                 .catch(err => console.log(err))
         }
-    };
 
     const handleDelete = () => {
         del(postUrl + 'post/' + props.post.id)
@@ -142,7 +141,7 @@ const PostView = (props: Props) => {
                 />
             </ListItem>
 
-            {amountOfPosts > 0 && props.amount &&
+            {amountOfPosts > 0 &&
             <Link
                 className={classes.thread}
                 component="button"

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {
     AppBar,
     createStyles,
@@ -18,7 +18,6 @@ import clsx from "clsx";
 import {drawerWidth} from "./Layout";
 import {useHistory} from "react-router-dom";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import {get, userUrl} from "../utils/http";
 import {User} from "../utils/models";
 import ShowUsers from "./ShowUsers";
 
