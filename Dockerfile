@@ -12,7 +12,7 @@ WORKDIR /jj-ui-ingsis
 COPY . .
 
 # Build the project and copy the files
-RUN yarn run build
+RUN yarn build
 
 
 FROM nginx:alpine
