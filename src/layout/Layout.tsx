@@ -121,9 +121,9 @@ export default function Layout(props: Props) {
       <main className={clsx(classes.content, {
           [classes.contentShift]: open,
       })}>
-          <header className={"App-header"}>
+          <div className={"App-header"}>
               {props.child}
-          </header>
+          </div>
       </main>
     </div>
   );
