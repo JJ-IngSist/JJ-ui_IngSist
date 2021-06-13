@@ -4,8 +4,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
-import {IconButton} from "@material-ui/core";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import Divider from "@material-ui/core/Divider";
 import React from "react";
 
