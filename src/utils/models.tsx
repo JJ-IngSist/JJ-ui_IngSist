@@ -25,3 +25,14 @@ export type ChangePassword = {
     oldPassword: string,
     password: string,
 }
+
+export type ConversationModel = {
+    id?: number,
+    user1?: number,
+    user2?: number,
+    messages?: string[]
+}
+
+export type Message = {
+
+}

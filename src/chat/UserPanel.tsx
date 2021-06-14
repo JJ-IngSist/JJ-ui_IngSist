@@ -1,23 +1,22 @@
 import React, {useEffect, useState} from "react";
 import {User} from "../utils/models";
 import UserNode from "./UserNode";
-import {get, userUrl} from "../utils/http";
+import {get, messageUrl, userUrl} from "../utils/http";
 
-const ButtonPanel = ({ setActiveUser }) => {
+const ButtonPanel = ({ setActiveUser, setConversation, connect, disconnect }) => {
 
   const [users, setUsers] = useState<User[]>([])
 
   useEffect(() => {
     get(userUrl + 'user/followed').then(res => {
       setUsers(res)
-      console.log(res)
     }).catch()
   }, [])
 
   return (
     <div className="button-container">
       <div className="button-container-title">
-        <span> Contactos </span>
+        <span> Contacts </span>
       </div>
 
       <div className="button-each">
@@ -28,6 +27,9 @@ const ButtonPanel = ({ setActiveUser }) => {
               key={i}
               number={i}
               setUser={setActiveUser}
+              setConversation = {setConversation}
+              connect={connect}
+              disconnect={disconnect}
             />
           );
         })}

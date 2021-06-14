@@ -1,7 +1,9 @@
-export const userUrl = "/api/user/";
-export const postUrl = "/api/post/";
-// export const userUrl = "http://localhost:8080/";
-// export const postUrl = "http://localhost:8081/";
+// export const userUrl = "/api/user/";
+// export const postUrl = "/api/post/";
+// export const messageUrl = "/api/message/";
+export const userUrl = "http://localhost:8080/";
+export const postUrl = "http://localhost:8081/";
+export const messageUrl = "http://localhost:8082/";
 
 type Config = {
     headers?: Object | null,
@@ -13,7 +15,7 @@ type mapEntry = {
     value: string
 }
 
-const cleanCookies = (cookies: string) => {
+export const cleanCookies = (cookies: string) => {
     if (cookies) {
         let aux = cookies.split(';')
         let map: mapEntry[] = aux.map<mapEntry>(a => {return {key: a.split('=')[0], value: a.split('=')[1]}});

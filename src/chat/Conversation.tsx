@@ -2,11 +2,20 @@ import React, { Fragment, useState } from "react";
 import MessageList from "./MessageList";
 import SendMessageForm from "./SendMessageForm";
 import "./chat.scss";
+import {ConversationModel, User} from "../utils/models";
+import {cleanCookies} from "../utils/http";
 
-export default function Conversation({activeUser}) {
+type Props = {
+  activeUser: User,
+  stompClient: any,
+  conversation: ConversationModel,
+  addMessage: Function
+}
+
+export default function Conversation(props: Props) {
   const [chat, setChat] = useState([]);
   const [message, setMessage] = useState("");
-  const [sessionId, setSessionId] = useState("");
+  // const [sessionId, setSessionId] = useState("");
 
   // async function delay() {
   //   return new Promise((resolve) =>
@@ -59,18 +68,16 @@ export default function Conversation({activeUser}) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await addMessage(message, false);
-    await getAssistantReply(message);
-  }
-
-  function addMessage(text, watson) {
-    const newMsg = { text, watson, timestamp: Date.now() };
-    const buffer = chat;
-    buffer.push(newMsg);
+    sendMessage(message);
+    const cloned_array = await props.addMessage(message, false, chat);
     setMessage("");
-    let cloned_array = [].concat(buffer);
     setChat(cloned_array);
     scrollDown();
+    // await getAssistantReply(message);
+  }
+
+  function sendMessage(message) {
+    props.stompClient.send("/conversation/chat", {}, JSON.stringify({text: message, conversation_id: props.conversation.id, token: cleanCookies(document.cookie)}));
   }
 
   // function updateLastMessage(text) {
@@ -83,31 +90,31 @@ export default function Conversation({activeUser}) {
   //   scrollDown();
   // }
 
-  async function getAssistantReply(message) {
-    await addMessage(<div className="typing" />, true);
-
-    try {
-      // const data = {
-      //   session_id: sessionId,
-      //   text: message,
-      // };
-
-      //const response = await inputMessage(data);
-      //console.log("get-reply", response);
-
-      //const responseArray = response.data.output.generic;
-      // for (let res of responseArray) {
-      //   if (res.response_type === "text") {
-      //     const watsonReply = res.text;
-      //     await addMessage(watsonReply, true);
-      //     await updateLastMessage(watsonReply);
-      //     await delay();
-      //   }
-      //}
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
+  // async function getAssistantReply(message) {
+  //   await addMessage(<div className="typing" />, true);
+  //
+  //   try {
+  //     // const data = {
+  //     //   session_id: sessionId,
+  //     //   text: message,
+  //     // };
+  //
+  //     //const response = await inputMessage(data);
+  //     //console.log("get-reply", response);
+  //
+  //     //const responseArray = response.data.output.generic;
+  //     // for (let res of responseArray) {
+  //     //   if (res.response_type === "text") {
+  //     //     const watsonReply = res.text;
+  //     //     await addMessage(watsonReply, true);
+  //     //     await updateLastMessage(watsonReply);
+  //     //     await delay();
+  //     //   }
+  //     //}
+  //   } catch (ex) {
+  //     console.log(ex);
+  //   }
+  // }
 
   function scrollDown() {
     const chatBox = document.getElementById("thisistheend");
@@ -124,7 +131,7 @@ export default function Conversation({activeUser}) {
   return (
     <Fragment>
       <div className="chat-container">
-        <h2 className="chat-title">{activeUser ? activeUser.name : 'Select a user'}</h2>
+        <h2 className="chat-title">{props.activeUser ? props.activeUser.name : 'Select a user'}</h2>
         <MessageList chat={chat} />
         <SendMessageForm
           message={message}
