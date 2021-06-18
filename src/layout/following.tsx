@@ -1,9 +1,7 @@
 import React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import {Post, User} from "../utils/models";
-import InputPost from "../post/InputPost";
-import {post, postUrl} from '../utils/http';
+import {Post} from "../utils/models";
 import PostView from "../post/PostView";
 
 type Props = {
@@ -42,7 +40,7 @@ const Following = (props: Props) => {
     <div>
       <List className={classes.root}>
         {props.posts.length !== 0 ? props.posts.map((row, index) => (
-          <PostView key={index} post={row}/>
+          <PostView key={index} post={row} amount={true}/>
         )) : <p>No posts yet! Go follow some people</p>}
       </List>
     </div>

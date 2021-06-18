@@ -1,5 +1,6 @@
 export const userUrl = "/api/user/";
 export const postUrl = "/api/post/";
+export const messageUrl = "/api/messages/"
 
 type Config = {
     headers?: Object | null,
@@ -11,7 +12,7 @@ type mapEntry = {
     value: string
 }
 
-const cleanCookies = (cookies: string) => {
+export const cleanCookies = (cookies: string) => {
     if (cookies) {
         let aux = cookies.split(';')
         let map: mapEntry[] = aux.map<mapEntry>(a => {return {key: a.split('=')[0], value: a.split('=')[1]}});
@@ -25,8 +26,10 @@ const request = (url: string, method: string, body: Object | null, config: Confi
         const token = cleanCookies(document.cookie);
         headers = (token) ? {
             "Content-Type": "application/json",
+            'Accept': 'application/json',
             Authorization: "Bearer " + token
         } : {"Content-Type": "application/json",
+            'Accept': 'application/json',
             Authorization: ""};
     }
     const configuration: Object = {

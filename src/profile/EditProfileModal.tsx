@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Modal} from "@material-ui/core";
-import {ChangePassword, User} from "../utils/models";
-import {post, put, userUrl} from "../utils/http";
+import {User} from "../utils/models";
+import {put, userUrl} from "../utils/http";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";

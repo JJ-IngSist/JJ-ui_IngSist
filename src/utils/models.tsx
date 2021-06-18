@@ -17,10 +17,24 @@ export type Post = {
     user?: number,
     username?: string,
     email?: string,
-    threadId?: number
+    threadId?: number,
+    first?:boolean
 }
 
 export type ChangePassword = {
     oldPassword: string,
     password: string,
+}
+
+export type ConversationModel = {
+    id?: number,
+    user1?: number,
+    user2?: number,
+    messages?: Message[]
+}
+
+export type Message = {
+    text?: string,
+    sender_id?: number,
+    receiver_id?: number,
 }

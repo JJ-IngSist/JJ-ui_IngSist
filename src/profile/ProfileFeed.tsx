@@ -4,7 +4,6 @@ import List from '@material-ui/core/List';
 import {Post} from "../utils/models";
 import InputPost from "../post/InputPost";
 import {post, postUrl} from '../utils/http';
-import PostView from "../post/PostView";
 import ProfilePostView from "../post/ProfilePostView";
 
 type Props = {
