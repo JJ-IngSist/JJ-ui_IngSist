@@ -124,13 +124,13 @@ const Header = (props: Props) => {
     const [open, setOpen] = React.useState(false);
     let searchText = ''
 
-    // useEffect(() => {
-    //     get(userUrl + 'users')
-    //         .then(res => {
-    //             setUsers(res)
-    //         })
-    //         .catch()
-    // }, [])
+    useEffect(() => {
+        get(userUrl + 'users')
+            .then(res => {
+                setUsers(res)
+            })
+            .catch()
+    }, [])
 
     const handleClick = () => {
         setOpen((prev) => !prev);
