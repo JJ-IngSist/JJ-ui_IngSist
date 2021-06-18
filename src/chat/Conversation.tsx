@@ -32,10 +32,6 @@ export default function Conversation(props: Props) {
     scrollDown();
   }
 
-  function sendMessage(message) {
-    props.stompClient.send("/conversation/chat", {}, JSON.stringify({text: message, conversation_id: +localStorage.getItem("conversation"), token: cleanCookies(document.cookie)}));
-  }
-
   function scrollDown() {
     const chatBox = document.getElementById("thisistheend");
 
@@ -46,6 +42,10 @@ export default function Conversation(props: Props) {
         behavior: "smooth",
       });
     }
+  }
+
+  function sendMessage(message) {
+    props.stompClient.send("/conversation/chat", {}, JSON.stringify({text: message, conversation_id: +localStorage.getItem("conversation"), token: cleanCookies(document.cookie)}));
   }
 
   return (

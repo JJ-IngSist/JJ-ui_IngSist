@@ -31,10 +31,21 @@ function Chat() {
     }
   }
 
-  function addObjectMessage(message) {
-    const newMsg : Message = {text: message.text, sender_id: message.sender_id, receiver_id: message.receiver_id}
-    const array = chat.concat(newMsg)
-    setChat(array);
+  function addObjectMessage(messageList) {
+    setChat(messageList);
+    scrollDown();
+  }
+
+  function scrollDown() {
+    const chatBox = document.getElementById("thisistheend");
+
+    if (chatBox) {
+      // @ts-ignore
+      chatBox.parentNode.scrollTo({
+        top: chatBox.offsetTop,
+        behavior: "smooth",
+      });
+    }
   }
 
   return (
