@@ -9,12 +9,17 @@ type Props = {
   activeUser: User,
   stompClient: any,
   conversation: ConversationModel,
-  addStringMessage: Function,
-  setConversation: Function
+  setConversation: Function,
+  chat: Message[],
+  setChat: Function
 }
 
 export default function Conversation(props: Props) {
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    props.setChat(props.conversation.messages.concat(props.chat));
+  }, [])
 
   function handleChange(event) {
     setMessage(event.target.value);
@@ -23,14 +28,12 @@ export default function Conversation(props: Props) {
   async function handleSubmit(event) {
     event.preventDefault();
     sendMessage(message);
-    const cloned_array = await props.addStringMessage(message, props.conversation.messages);
     setMessage("");
-    props.setConversation({...props.conversation, messages: props.conversation.messages.concat(cloned_array)});
     scrollDown();
   }
 
   function sendMessage(message) {
-    props.stompClient.send("/conversation/chat", {}, JSON.stringify({text: message, conversation_id: props.conversation.id, token: cleanCookies(document.cookie)}));
+    props.stompClient.send("/conversation/chat", {}, JSON.stringify({text: message, conversation_id: +localStorage.getItem("conversation"), token: cleanCookies(document.cookie)}));
   }
 
   function scrollDown() {
@@ -49,7 +52,7 @@ export default function Conversation(props: Props) {
     <Fragment>
       <div className="chat-container">
         <h2 className="chat-title">{props.activeUser ? props.activeUser.name : 'Select a user'}</h2>
-        <MessageList chat={props.conversation.messages} />
+        {props.chat.length === 0 ? <MessageList chat={props.conversation.messages}/> : <MessageList chat={props.chat} />}
         <SendMessageForm
           message={message}
           handleSubmit={handleSubmit}
@@ -58,6 +61,4 @@ export default function Conversation(props: Props) {
       </div>
     </Fragment>
   );
-
-
 }
