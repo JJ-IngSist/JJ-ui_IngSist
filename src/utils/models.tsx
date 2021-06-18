@@ -30,9 +30,11 @@ export type ConversationModel = {
     id?: number,
     user1?: number,
     user2?: number,
-    messages?: string[]
+    messages?: Message[]
 }
 
 export type Message = {
-
+    text?: string,
+    sender_id?: number,
+    receiver_id?: number,
 }

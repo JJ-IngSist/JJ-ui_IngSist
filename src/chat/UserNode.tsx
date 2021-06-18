@@ -1,7 +1,17 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {get, messageUrl} from "../utils/http";
 
 const UserNode = ({ user, number, setUser, setConversation, connect, disconnect }) => {
+
+  const [notifications, setNotifications] = useState<number>(0)
+
+  useEffect(() => {
+    get(messageUrl + "notifications/" + user.id)
+      .then(res => {
+        setNotifications(res)
+      })
+      .catch()
+  }, [])
 
   function conversation() {
     get(messageUrl + "conversation/" + user.id + "/" + +localStorage.getItem("id"))
@@ -24,6 +34,7 @@ const UserNode = ({ user, number, setUser, setConversation, connect, disconnect 
       onClick={handleOnClick}
     >
       {user.name}
+      {notifications}
     </button>
   );
 };
