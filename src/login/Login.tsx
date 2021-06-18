@@ -2,9 +2,8 @@ import React, { useReducer, useEffect } from 'react';
 import LoginForm from "../auth/login";
 import {post, userUrl} from "../utils/http";
 import {useHistory} from "react-router-dom";
-import {ACCESS_TOKEN} from "../Constants";
 
-type State = {
+export type State = {
     username: string
     password:  string
     isButtonDisabled: boolean

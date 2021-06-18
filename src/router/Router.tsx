@@ -11,6 +11,7 @@ import UserFollowing from "../follow/UserFollowing";
 import UserFollowers from "../follow/UserFollowers";
 import FeedView from "../mainpage/FeedView";
 import ChatView from "../chat/ChatView";
+// import Socketio from "../socketio/Socketio";
 
 const Router = () => {
 
@@ -27,6 +28,7 @@ const Router = () => {
                 <AuthRoute path={"/dms"} component={ChatView}/>
                 <Route path={"/feed"} component={FeedView}/>
                 <AuthRoute path={"/"} component={MainPage}/>
+                {/*<Route path={"/socketio"} component={Socketio}/>*/}
             </Switch>
         </BrowserRouter>
     )

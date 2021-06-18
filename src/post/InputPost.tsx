@@ -47,6 +47,10 @@ const InputPost = (props: Props) => {
 
     const handleClick = () => {
         props.addPost(value);
+        // @ts-ignore
+        document.getElementById('outlined-multiline-static').value = ''
+        value.text = ''
+        setHidden(true)
     }
 
     return (
