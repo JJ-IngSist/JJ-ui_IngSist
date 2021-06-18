@@ -25,7 +25,7 @@ export default function Conversation(props: Props) {
     sendMessage(message);
     const cloned_array = await props.addStringMessage(message, props.conversation.messages);
     setMessage("");
-    props.setConversation({...props.conversation, messages: props.conversation.messages.concat(cloned_array)});
+    // props.setConversation({...props.conversation, messages: props.conversation.messages.concat(cloned_array)});
     scrollDown();
   }
 
