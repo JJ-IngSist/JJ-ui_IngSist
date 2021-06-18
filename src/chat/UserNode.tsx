@@ -34,8 +34,7 @@ const UserNode = ({ user, number, setUser, setConversation, connect, disconnect 
       className={`buttonPanel-box buttonPanel-text-${number}`}
       onClick={handleOnClick}
     >
-      {user.name}
-      {notifications}
+      {user.name}   {notifications}
     </button>
   );
 };
