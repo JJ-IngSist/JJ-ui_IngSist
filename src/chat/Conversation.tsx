@@ -9,11 +9,11 @@ type Props = {
   activeUser: User,
   stompClient: any,
   conversation: ConversationModel,
-  addMessage: Function
+  addStringMessage: Function,
+  setConversation: Function
 }
 
 export default function Conversation(props: Props) {
-  const [chat, setChat] = useState<Message[]>([]);
   const [message, setMessage] = useState("");
 
   function handleChange(event) {
@@ -23,9 +23,9 @@ export default function Conversation(props: Props) {
   async function handleSubmit(event) {
     event.preventDefault();
     sendMessage(message);
-    const cloned_array = await props.addMessage(message, chat);
+    const cloned_array = await props.addStringMessage(message, props.conversation.messages);
     setMessage("");
-    setChat(props.conversation.messages.concat(cloned_array));
+    props.setConversation({...props.conversation, messages: props.conversation.messages.concat(cloned_array)});
     scrollDown();
   }
 
@@ -49,7 +49,7 @@ export default function Conversation(props: Props) {
     <Fragment>
       <div className="chat-container">
         <h2 className="chat-title">{props.activeUser ? props.activeUser.name : 'Select a user'}</h2>
-        {chat.length === 0 ? <MessageList chat={props.conversation.messages} /> : <MessageList chat={chat} /> }
+        <MessageList chat={props.conversation.messages} />
         <SendMessageForm
           message={message}
           handleSubmit={handleSubmit}
@@ -58,4 +58,6 @@ export default function Conversation(props: Props) {
       </div>
     </Fragment>
   );
+
+
 }
