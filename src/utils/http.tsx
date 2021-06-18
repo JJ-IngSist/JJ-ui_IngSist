@@ -1,9 +1,6 @@
 export const userUrl = "/api/user/";
 export const postUrl = "/api/post/";
-export const messageUrl = "/api/messages/";
-// export const userUrl = "http://localhost:8080/";
-// export const postUrl = "http://localhost:8081/";
-// export const messageUrl = "http://localhost:8082/";
+export const messageUrl = "/api/messages/"
 
 type Config = {
     headers?: Object | null,
