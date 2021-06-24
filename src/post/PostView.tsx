@@ -16,7 +16,8 @@ import {useHistory} from "react-router-dom";
 
 type Props = {
     post: Post,
-    amount: boolean
+    amount: boolean,
+    handleDelete: (post: Post) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -78,12 +79,6 @@ const PostView = (props: Props) => {
       }
     }
 
-    const handleDelete = () => {
-        del(postUrl + 'post/' + props.post.id)
-            .then(() => history.push('/'))
-            .catch()
-    }
-
     const goToUser = (id: number) => {
       history.push('/profile/' + id)
     }
@@ -133,7 +128,7 @@ const PostView = (props: Props) => {
                                 label={thePost.likes}
                             />
                             {thePost.user === +localStorage.getItem('id') &&
-                            <IconButton aria-label="delete" className={classes.comment} onClick={handleDelete}>
+                            <IconButton aria-label="delete" className={classes.comment} onClick={() => props.handleDelete(thePost)}>
                                 <DeleteOutlineIcon />
                             </IconButton>
                             }

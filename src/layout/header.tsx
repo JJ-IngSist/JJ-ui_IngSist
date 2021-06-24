@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
     AppBar,
     createStyles,
@@ -20,6 +20,7 @@ import {useHistory} from "react-router-dom";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {User} from "../utils/models";
 import ShowUsers from "./ShowUsers";
+import {get, userUrl} from "../utils/http";
 
 type Props = {
     handleDrawerOpen: () => void,
@@ -124,13 +125,13 @@ const Header = (props: Props) => {
     const [open, setOpen] = React.useState(false);
     let searchText = ''
 
-    // useEffect(() => {
-    //     get(userUrl + 'users')
-    //         .then(res => {
-    //             setUsers(res)
-    //         })
-    //         .catch()
-    // }, [])
+    useEffect(() => {
+        get(userUrl + 'users')
+            .then(res => {
+                setUsers(res)
+            })
+            .catch()
+    }, [])
 
     const handleClick = () => {
         setOpen((prev) => !prev);
