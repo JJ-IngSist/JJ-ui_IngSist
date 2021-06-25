@@ -242,7 +242,7 @@ const Header = (props: Props) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        Jibber Jabber
+                        Jibber Jabber Dev
                     </Typography>
                     <ClickAwayListener onClickAway={handleClickAway}>
                         <div className={classes.search_result}>
