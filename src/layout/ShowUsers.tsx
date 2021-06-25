@@ -2,6 +2,7 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import React from "react";
 import {Avatar, Divider, Link, List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
 import {User} from "../utils/models";
+import {useHistory} from "react-router-dom";
 
 type Props = {
     users: User[]
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ShowUsers = (props: Props) => {
     const classes = useStyles();
+    const history = useHistory();
 
     return (
         <List className={classes.root}>
@@ -45,7 +47,7 @@ const ShowUsers = (props: Props) => {
                             </ListItemAvatar>
                             <ListItemText
                                 primary={
-                                    <Link className={classes.link} href={'/profile/' + user.id}>{user.username}</Link>
+                                    <Link className={classes.link} onClick={() => history.push('/profile/' + user.id)}>{user.username}</Link>
                                 }
                             />
                         </ListItem>

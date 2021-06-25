@@ -142,7 +142,7 @@ const PostView = (props: Props) => {
                 className={classes.thread}
                 component="button"
                 variant="body2"
-                onClick={() => {history.push('thread/' + thePost.threadId)}}
+                onClick={() => {history.push('/thread/' + thePost.threadId)}}
             >
                 View Thread ({amountOfPosts})
             </Link>}
