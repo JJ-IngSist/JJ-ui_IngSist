@@ -16,6 +16,7 @@ const UserNode = ({ user, number, setUser, setConversation, connect, disconnect 
   function conversation() {
     get(messageUrl + "conversation/" + user.id + "/" + +localStorage.getItem("id"))
       .then(res => {
+        localStorage.setItem("conversation", res.id)
         setConversation(res)
       })
       .catch()
@@ -33,8 +34,7 @@ const UserNode = ({ user, number, setUser, setConversation, connect, disconnect 
       className={`buttonPanel-box buttonPanel-text-${number}`}
       onClick={handleOnClick}
     >
-      {user.name}
-      {notifications}
+      {user.name}   {notifications}
     </button>
   );
 };

@@ -3,7 +3,7 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import PostView from "../post/PostView";
 import React from "react";
-import {post, postUrl} from "../utils/http";
+import {del, post, postUrl} from "../utils/http";
 import AnswerPost from "../post/AnswerPost";
 
 type Props = {
@@ -47,14 +47,21 @@ const ThreadView = (props: Props) => {
       .catch(err => console.log(err.message))
   }
 
+  const handleDelete = (post: Post) => {
+    del(postUrl + 'post/' + post.id)
+      .then(() => {
+        props.setPosts(props.posts.filter(p => p.id !== post.id))
+      }).catch()
+  }
+
   return (
     <div>
       {props.first.id !== 0 ?
         <List className={classes.root}>
-          <PostView post={props.first} amount={false}/>
+          <PostView post={props.first} amount={false} handleDelete={handleDelete}/>
           {+localStorage.getItem('id') !== 0 ? <AnswerPost first={props.first} addPost={addPost}/> : <></>}
           {props.posts.map((row, index) => (
-            <PostView key={index} post={row} amount={false}/>
+            <PostView key={index} post={row} amount={false} handleDelete={handleDelete}/>
           ))}
         </List> : <></>}
     </div>
