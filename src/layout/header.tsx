@@ -20,7 +20,7 @@ import {useHistory} from "react-router-dom";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {User} from "../utils/models";
 import ShowUsers from "./ShowUsers";
-import {get, userUrl} from "../utils/http";
+import {get, messageUrl, userUrl} from "../utils/http";
 
 type Props = {
     handleDrawerOpen: () => void,
@@ -123,6 +123,7 @@ const Header = (props: Props) => {
     const [users, setUsers] = React.useState<User[]>([])
     const [list, setList] = React.useState<User[]>([])
     const [open, setOpen] = React.useState(false);
+    const [text, setText] = React.useState("");
     let searchText = ''
 
     useEffect(() => {
@@ -131,6 +132,11 @@ const Header = (props: Props) => {
                 setUsers(res)
             })
             .catch()
+        get(messageUrl + 'print')
+          .then(res => {
+              setText(res)
+          })
+          .catch()
     }, [])
 
     const handleClick = () => {
@@ -242,7 +248,7 @@ const Header = (props: Props) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        Jibber Jabber Prod
+                        Jibber Jabber Prod - {text}
                     </Typography>
                     <ClickAwayListener onClickAway={handleClickAway}>
                         <div className={classes.search_result}>
