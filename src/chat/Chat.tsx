@@ -5,7 +5,7 @@ import {ConversationModel, User, Message} from "../utils/models";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import Conversation from "./Conversation";
-import {messageUrl} from "../utils/http";
+import {cleanCookies, messageUrl} from "../utils/http";
 
 function Chat() {
 
@@ -18,7 +18,7 @@ function Chat() {
     const socket = new SockJS(messageUrl + 'jibber-jabber');
     const over = Stomp.over(socket);
     setStompClient(over);
-    over.connect({}, function () {
+    over.connect({"X-Authorization": "Bearer " + cleanCookies(document.cookie)}, function () {
       over.subscribe('/topic/messages', function (message) {
         addObjectMessage(JSON.parse(message.body));
       });
