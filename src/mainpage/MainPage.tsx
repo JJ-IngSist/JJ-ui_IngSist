@@ -26,7 +26,7 @@ const MainPage = () => {
 
     return (
         <div className="App">
-            <Layout child={<Following posts={posts} firsts={firsts}/>}/>
+            <Layout child={<Following posts={posts} firsts={firsts} setPosts={setPosts}/>}/>
         </div>
     )
 }

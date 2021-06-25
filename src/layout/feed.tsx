@@ -3,7 +3,7 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import {Post, User} from "../utils/models";
 import InputPost from "../post/InputPost";
-import {post, postUrl} from '../utils/http';
+import {del, post, postUrl} from '../utils/http';
 import PostView from "../post/PostView";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router-dom";
@@ -51,6 +51,15 @@ const Feed = (props: Props) => {
         .catch(err => console.log(err.message))
   }
 
+  const handleDelete = (post: Post) => {
+    del(postUrl + 'post/' + post.id)
+      .then(() => {
+        const filtered = props.posts.filter(p => p.id !== post.id)
+        debugger
+        props.setPosts(filtered)
+      }).catch((error) => console.log(error))
+  }
+
   const goToLogin = () => {
       history.push('/login')
   }
@@ -61,7 +70,7 @@ const Feed = (props: Props) => {
         {+localStorage.getItem('id') === 0 ? <Button onClick={goToLogin}> Login </Button> : <></>}
           <List className={classes.root}>
             {props.posts !== [] ? props.posts.map((row, index) => (
-              <PostView key={index} post={row} amount={true}/>
+              <PostView key={index} post={row} amount={true} handleDelete={handleDelete}/>
             )) : <p> No posts yet! </p>}
           </List>
       </div>
